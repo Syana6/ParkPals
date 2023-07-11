@@ -1,150 +1,290 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ParkPALsApp());
 }
 
-// StatelessWidget是一個無狀態的Widget，用於構建不需要在應用程序生命週期中保持狀態的場景中，
-// 一旦構建完成就不能被修改。
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ParkPALsApp extends StatelessWidget {
+  const ParkPALsApp({Key? key}) : super(key: key);
 
-  // 這個 Widget 是應用程式的根組件，即所有其他的 Widget 都是它的子 Widget。它負責渲染整個應用程式的畫面。
-  // 在整個應用程式中只會被實例化一次，並且是其他 Widget 的共同父級。在設計應用程式時，通常會在這個 Widget 中定義應用程式的全局變數和配置。
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '社區車位租借',
       theme: ThemeData(
-        // 應用程式的主題（theme），用來定義應用程式的整體外觀和樣式，例如標題欄和背景色等。
-        // 將 primarySwatch 改為 Colors.green是示範如何在應用程式運行時動態更改主題設定。
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page 1'),
+      home: const HomePage(title: '可租借車位'),
     );
   }
 }
 
-// StatefulWidget是一個有狀態的Widget，用於生命週期狀態保持、
-// 負責創建、繪製和構建Widget。
-// 當使用StatefulWidget時，通常需要重寫其State類的build方法。
-// 當狀態改變時，Flutter框架會自動調用State對象的build方法，重新構建Widget，以反映新的狀態。
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
-  // State 物件是 Widget 的配置檔，它包含一些由父 Widget（即 App Widget）提供的值（在這個例子中是title），
-  // 並且這些值會被用於 State 的 build 方法中。
-  // 在 Widget 的子類中，所有的欄位都必須標記為 "final"，表示一旦被賦值後就不能再改變了。
   final String title;
 
   @override
-  // 負責維護Widget的狀態、重繪和更新。
-  State<MyHomePage> createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-// 首頁建構_incrementCounter方法
-// 表頭、Body、ActionButton在最底下
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  int _selectedIndex = 1; // 預設是租借
+  String searchValue = '';
 
-  void _incrementCounter() {
+  List<ParkingSpace> filteredParkingSpaces = []; // 搜尋後的車位
+  AnimationController? animationController;
+
+  @override
+  void initState() {
+    filteredParkingSpaces = parkingSpaces;
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+
+    super.initState();
+  }
+
+  void _onItemTapped(int index) {
     setState(() {
-      // 這個方法是調用了 Flutter 框架的 setState 方法，用於告訴框架該 State 發生了變化，
-      // 需要重新執行下方的 build 方法，這樣顯示就可以反映出更新後的值。
-      // 如果我們改變了 _counter 變數的值，但沒有調用 setState() 方法，則 build 方法將不會重新執行，所以顯示上就看不到任何變化。
-      _counter++;
+      _selectedIndex = index;
+      // TODO: 根據選擇的按鈕改變頁面
     });
   }
-    void _decrementCounter() {
+
+  // 搜尋車位
+  void searchParkingSpaces() {
     setState(() {
-      // 這個方法是調用了 Flutter 框架的 setState 方法，用於告訴框架該 State 發生了變化，
-      // 需要重新執行下方的 build 方法，這樣顯示就可以反映出更新後的值。
-      // 如果我們改變了 _counter 變數的值，但沒有調用 setState() 方法，則 build 方法將不會重新執行，所以顯示上就看不到任何變化。
-      _counter--;
+      filteredParkingSpaces = parkingSpaces
+          .where((space) => '${space.owner} ${space.floor} ${space.space}'
+              .contains(searchValue))
+          .toList();
     });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-      // 這個方法會在每次調用 setState() 方法時被重新執行，
-      // 例如在 _incrementCounter 方法中。在這個方法中，會重新定義 Widget 的結構和樣式，以便反映出最新的狀態。
-
-      
     return Scaffold(
       appBar: AppBar(
-        // 設置 AppBar 的標題文字，標題文字的內容是 MyHomePage 物件的一個屬性，由 App.build 方法創建。
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center 是一個佈局（layout）Widget，它用於將其單一的子 Widget 居中放置在父 Widget 中。
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          // 預設情況下，Column 的寬度會自適應子 Widget 的寬度，並且會盡可能地填滿父 Widget 的高度。
-          // Widget 垂直居中
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times b:',
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: '輸入租用開始日期時間',
+                      border: OutlineInputBorder(),
+                    ),
+                    onTap: () {
+                      // TODO: 在這裡加入選擇日期時間的功能
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  flex: 1,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: '租用小時',
+                      border: OutlineInputBorder(),
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(2),
+                    ],
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      setState(() {
+                        // TODO 只能輸入數字
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: '搜尋車位',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      searchValue = value;
+                      searchParkingSpaces();
+                    },
+                  ),
+                ),
+                IconButton(
+                  iconSize: 30,
+                  icon: const Icon(Icons.search),
+                  onPressed: searchParkingSpaces,
+                ),
+              ],
             ),
-            // DefaultTabController(
-            //   length: tabList.length,
-            //   child: Scaffold(
-            //     appBar: TabBar(
-            //       tabs: tabList.map((choice) {
-            //         return Tab(
-            //           text: choice.title,
-            //           icon: Icon(choice.icon),
-            //         );
-            //       }).toList(),
-            //     ),
-            //     body: TabBarView(
-            //       children: tabList.map((choice) {
-            //       return Center(
-            //         child: Icon(
-            //           choice.icon,
-            //           size: 100.0,
-            //         ),
-            //       );
-            //     }).toList()),
-            //   ),
-            // ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
+                scrollDirection: Axis.vertical,
+                itemCount: filteredParkingSpaces.length,
+                itemBuilder: (context, index) {
+                  final Animation<double> animation =
+                      Tween<double>(begin: 0.0, end: 1.0).animate(
+                    CurvedAnimation(
+                      parent: animationController!,
+                      curve: Interval(
+                          (1 / filteredParkingSpaces.length) * index, 1.0,
+                          curve: Curves.fastOutSlowIn),
+                    ),
+                  );
+
+                  animationController?.forward();
+                  return ParkingSpaceListView(
+                    animation: animation,
+                    animationController: animationController,
+                    listData: filteredParkingSpaces[index],
+                    callBack: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                              parkingSpace: filteredParkingSpaces[index]!),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              onPressed: _incrementCounter,
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_upward),
+            label: '出借',
           ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: FloatingActionButton(
-              onPressed: _decrementCounter,
-              tooltip: 'Decrement',
-              child: const Icon(Icons.remove),
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_downward),
+            label: '租借',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: '帳號',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
 }
 
-class TabChoice {
-  final String title;
-  final IconData icon;
-  const TabChoice(this.title, this.icon);
+class DetailPage extends StatelessWidget {
+  final ParkingSpace parkingSpace;
+
+  const DetailPage({Key? key, required this.parkingSpace}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+            '${parkingSpace.owner} ${parkingSpace.floor} ${parkingSpace.space}'),
+      ),
+      body: Center(
+        // TODO: 替換成從後端取得的車位照片
+        child: Image.network('https://example.com/parking_space_image.png'),
+      ),
+    );
+  }
 }
 
-const List<TabChoice> tabList = <TabChoice>[
-  TabChoice('Happy', Icons.mood),
-  TabChoice('Sad', Icons.mood_bad),
+class ParkingSpace {
+  final String owner;
+  final String floor;
+  final String space;
+  final int price;
+
+  ParkingSpace(this.owner, this.floor, this.space, this.price);
+}
+
+List<ParkingSpace> parkingSpaces = [
+  ParkingSpace('266-1', '11F', '52號車位', 20),
+  ParkingSpace('266-2', '5F', '10號車位', 25),
+  ParkingSpace('158-7', '3F', '18號車位', 15),
+  ParkingSpace('999-1', '8F', '22號車位', 30),
+  ParkingSpace('999-2', '2F', '103號車位', 40),
+  ParkingSpace('999-3', '3F', '122號車位', 50),
+  ParkingSpace('999-4', '10F', '157號車位', 80),
+  ParkingSpace('999-5', '12F', '383號車位', 1),
+  ParkingSpace('999-6', '13F', '88號車位', 10),
+  ParkingSpace('999-7', '14F', '66號車位', 5),
+  // 更多車位...
 ];
+
+// 自定義ParkingSpaceListView
+class ParkingSpaceListView extends StatelessWidget {
+  const ParkingSpaceListView(
+      {Key? key,
+      this.listData,
+      this.callBack,
+      this.animationController,
+      this.animation})
+      : super(key: key);
+
+  final ParkingSpace? listData;
+  final VoidCallback? callBack;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController!,
+      builder: (BuildContext context, Widget? child) {
+        // 透明度的漸變效果，子 Widget 將根據動畫的進度進行淡入淡出效果
+        return FadeTransition(
+          opacity: animation!,
+          // 進行二維變換，例如平移、縮放和旋轉
+          child: Transform(
+            transform: Matrix4.translationValues(
+                200 * (1.0 - animation!.value), 0.0, 0.0),
+            // 指定子 Widget 的寬高比
+            child: AspectRatio(
+              aspectRatio: 4.6,
+              // 裁剪為圓角矩形形狀
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                child: Card(
+                  child: ListTile(
+                    title: Text('${listData!.owner} ${listData!.floor} ${listData!.space.padLeft(8)}'),
+                    subtitle: Text('每小時\$${listData!.price}'),
+                    onTap: callBack,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
