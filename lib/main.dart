@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:parkpals/rent/cantRentPage.dart';
+import 'package:parkpals/rentView/canRent.dart';
+import 'forRentView/parkingCommunity.dart';
 
 void main() {
   runApp(const ParkPALsApp());
@@ -18,7 +18,7 @@ class ParkPALsApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // todo: 這裡要改成登入頁面
-      home: const HomePage(title: '金鶯後花園 - 社區停車位租借友善互助系統'),
+      home: const HomePage(title: '{社區名稱} - 社區停車位租借友善互助系統'),
     );
   }
 }
@@ -32,18 +32,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 1; // 預設是租借
+  int _currentIndex = 1; // 預設
+  final PageController _pageController = PageController(initialPage: 1); // match with initial index
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-  
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      // TODO: 根據選擇的按鈕改變頁面
-    });
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+    // update index and rebuild widgets
+    setState(() => _currentIndex = index);
   }
 
   @override
@@ -52,9 +51,19 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: canRentPage(title: '可租借車位'),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: PageView(
+          controller: _pageController,
+          children: const [
+            parkingCommunity(title: '我上架的車位'),
+            canRent(title: '可租借車位'),
+            // Add your 3rd page here
+          ],
+          onPageChanged: (index) {
+            setState(() => _currentIndex = index);
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -71,10 +80,16 @@ class _HomePageState extends State<HomePage> {
             label: '帳號',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _currentIndex,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

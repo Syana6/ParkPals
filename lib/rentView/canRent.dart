@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// 顯示可租借車位的頁面
-class CantRentPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const canRentPage(title: '可租借車位'),
-    );;
-  }
-}
+import '../models/fakeData.dart';
+import '../models/parkingSpace.dart';
+import 'canRentDetail.dart';
 
-class canRentPage extends StatefulWidget {
-  const canRentPage({Key? key, required this.title}) : super(key: key);
+// 顯示可租借車位的頁面
+
+class canRent extends StatefulWidget {
+  const canRent({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
   _canRentList createState() => _canRentList();
 }
 
-class _canRentList extends State<canRentPage> with TickerProviderStateMixin {
+class _canRentList extends State<canRent> with TickerProviderStateMixin {
   String searchValue = '';
 
   List<ParkingSpace> filteredParkingSpaces = []; // 搜尋後的車位
@@ -31,9 +23,9 @@ class _canRentList extends State<canRentPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    filteredParkingSpaces = parkingSpaces;
+    filteredParkingSpaces = fakeParkingSpaces;
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2500), vsync: this);
+        duration: const Duration(milliseconds: 1300), vsync: this);
 
     super.initState();
   }
@@ -41,7 +33,7 @@ class _canRentList extends State<canRentPage> with TickerProviderStateMixin {
   // 搜尋車位
   void searchParkingSpaces() {
     setState(() {
-      filteredParkingSpaces = parkingSpaces
+      filteredParkingSpaces = fakeParkingSpaces
           .where((space) => '${space.owner} ${space.floor} ${space.space}'
               .contains(searchValue))
           .toList();
@@ -146,7 +138,7 @@ class _canRentList extends State<canRentPage> with TickerProviderStateMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetailPage(
+                          builder: (context) => canRentDetail(
                               parkingSpace: filteredParkingSpaces[index]),
                         ),
                       );
@@ -157,27 +149,6 @@ class _canRentList extends State<canRentPage> with TickerProviderStateMixin {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// 車位詳細資訊頁面
-class DetailPage extends StatelessWidget {
-  final ParkingSpace parkingSpace;
-
-  const DetailPage({Key? key, required this.parkingSpace}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            '${parkingSpace.owner} ${parkingSpace.floor} ${parkingSpace.space}'),
-      ),
-      body: Center(
-        // TODO: 顯示車位詳細資訊
-        child: Image.network('https://example.com/parking_space_image.png'),
       ),
     );
   }
@@ -220,7 +191,7 @@ class ParkingSpaceListView extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 child: Card(
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(8.0),  // Add some padding
+                    contentPadding: EdgeInsets.all(10.0),  // Add some padding
                     title: Container(
                       height: 30.0,  // Adjust this value as needed 
                       child: Column(
@@ -259,79 +230,4 @@ class ParkingSpaceListView extends StatelessWidget {
   }
 }
 
-
-class ParkingSpace {
-final String owner;   // 車位擁有者
-final String floor;   // 車位樓層
-final String space;   // 車位號碼
-final int price;      // 租借價格 pre hour
-final String image;   // 車位照片
-
-ParkingSpace({
-  required this.owner,
-  required this.floor,
-  required this.space,
-  required this.price,
-  required this.image,
-});
-}
-
-List<ParkingSpace> parkingSpaces = <ParkingSpace>[
-  ParkingSpace(
-    owner: '266-1 11F',
-    floor: 'B1',
-    space: '52',
-    price: 15,
-    image: 'assets/images/parking_space_1.jpg',
-  ),
-  ParkingSpace(
-    owner: '預計用Line的名稱',
-    floor: 'B1',
-    space: 'A02',
-    price: 30,
-    image: 'assets/images/parking_space_2.jpg',
-  ),
-  ParkingSpace(
-    owner: '沒有Line的名稱就用樓層+車位號碼',
-    floor: 'B1',
-    space: 'A03',
-    price: 25,
-    image: 'assets/images/parking_space_3.jpg',
-  ),
-  ParkingSpace(
-    owner: '高小姊接',
-    floor: 'B1',
-    space: 'A04',
-    price: 10,
-    image: 'assets/images/parking_space_4.jpg',
-  ),
-  ParkingSpace(
-    owner: '喬瑟夫·喬斯達',
-    floor: 'B1',
-    space: 'A05',
-    price: 0,
-    image: 'assets/images/parking_space_5.jpg',
-  ),
-  ParkingSpace(
-    owner: '喬納森·喬斯達',
-    floor: 'B1',
-    space: 'A06',
-    price: 100,
-    image: 'assets/images/parking_space_6.jpg',
-  ),
-  ParkingSpace(
-    owner: '空條坑錢承太郎',
-    floor: 'B1',
-    space: 'A07',
-    price: 120,
-    image: 'assets/images/parking_space_7.jpg',
-  ),
-  ParkingSpace(
-    owner: '喬魯諾·喬巴納',
-    floor: 'B1',
-    space: 'A08',
-    price: 35,
-    image: 'assets/images/parking_space_8.jpg',
-  )
-];
 
