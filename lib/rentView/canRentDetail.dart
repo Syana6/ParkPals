@@ -1,4 +1,6 @@
 // 車位詳細資訊頁面
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,9 @@ class canRentDetail extends StatelessWidget {
       ),
       body: Center(
         // TODO: 顯示車位詳細資訊
-        child: Image.network('https://example.com/parking_space_image.png'),
+        child: Image.file(
+          File(parkingSpace.image),
+          ),
       ),
     );
   }

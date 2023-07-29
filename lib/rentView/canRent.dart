@@ -191,7 +191,7 @@ class ParkingSpaceListView extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 child: Card(
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(10.0),  // Add some padding
+                    contentPadding: const EdgeInsets.all(10.0),  // Add some padding
                     title: Container(
                       height: 30.0,  // Adjust this value as needed 
                       child: Column(
@@ -199,7 +199,7 @@ class ParkingSpaceListView extends StatelessWidget {
                         // Image.network('https://example.com/parking_space_image.png', height: 50, width: 50), // Replace with your image
                         Row(
                             children: [
-                              Expanded(child: Text('${listData!.owner}')), // Make owner take up all the available space
+                              Expanded(child: Text(listData!.owner)), // Make owner take up all the available space
                               Text('每小時\$${listData!.price}'),  // Price will be at the end of the line
                             ],
                           ),
@@ -211,9 +211,9 @@ class ParkingSpaceListView extends StatelessWidget {
                         Row(
                           children: [
                             // text floor and space
-                            Text('${listData!.floor}'),
-                            SizedBox(width: 5),  // Change the width to height
-                            Text('${listData!.space}'),
+                            Text(listData!.floor),
+                            const SizedBox(width: 5),  // Change the width to height
+                            Text(listData!.space),
                           ],
                         ),
                       ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:parkpals/forRentView/parkingSpaceEditPage.dart';
 import '../models/fakeData.dart';
@@ -27,7 +29,12 @@ class _SpaceListPageState extends State<parkingSpaceList> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              leading: Image.network(spaces[index].image),
+              // Todo: 顯示車位縮圖
+              // leading: Image.network(spaces[index].image),
+              leading: Image.file(
+                File(spaces[index].image),
+                fit: BoxFit.cover,
+              ),
               title: Text('${spaces[index].owner}'),
               subtitle: Text('${spaces[index].floor} ${spaces[index].space}'),
               trailing: Text('每小時\$${spaces[index].price}'),
