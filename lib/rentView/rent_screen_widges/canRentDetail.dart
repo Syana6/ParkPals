@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/parkingSpace.dart';
+import '../../models/parkingSpace.dart';
 
 class canRentDetail extends StatelessWidget {
   final ParkingSpace parkingSpace;

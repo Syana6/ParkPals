@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkpals/rentView/canRent.dart';
+import 'package:parkpals/rentView/rent_home_screen.dart';
 import 'forRentView/parkingCommunity.dart';
 
 void main() {
@@ -57,12 +57,9 @@ class _HomePageState extends State<HomePage> {
           controller: _pageController,
           children: const [
             parkingCommunity(title: '我上架的車位'),
-            canRent(title: '可租借車位'),
-            // Add your 3rd page here
+            RentHomeScreen(title: '可租借車位'),
+            // TODO: Add your 3rd page here
           ],
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

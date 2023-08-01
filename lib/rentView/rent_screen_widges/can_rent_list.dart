@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../models/fakeData.dart';
-import '../models/parkingSpace.dart';
+import '../../models/fakeData.dart';
+import '../../models/parkingSpace.dart';
 import 'canRentDetail.dart';
 
 // 顯示可租借車位的頁面
-
-class canRent extends StatefulWidget {
-  const canRent({Key? key, required this.title}) : super(key: key);
-  final String title;
+class CanRentList extends StatefulWidget {
+  const CanRentList({Key? key}) : super(key: key);
 
   @override
-  _canRentList createState() => _canRentList();
+  _CanRentListState createState() => _CanRentListState();
 }
 
-class _canRentList extends State<canRent> with TickerProviderStateMixin {
+class _CanRentListState extends State<CanRentList> with TickerProviderStateMixin {
   String searchValue = '';
 
   List<ParkingSpace> filteredParkingSpaces = []; // 搜尋後的車位
@@ -27,6 +24,7 @@ class _canRentList extends State<canRent> with TickerProviderStateMixin {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1300), vsync: this);
 
+    animationController?.forward();
     super.initState();
   }
 
@@ -48,9 +46,6 @@ class _canRentList extends State<canRent> with TickerProviderStateMixin {
 
   Widget build (BuildContext context) {
      return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -128,7 +123,6 @@ class _canRentList extends State<canRent> with TickerProviderStateMixin {
                     ),
                   );
 
-                  animationController?.forward();
                   return ParkingSpaceListView(
                     animation: animation,
                     animationController: animationController,
