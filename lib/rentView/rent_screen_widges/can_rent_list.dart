@@ -4,7 +4,8 @@ import '../../models/fakeData.dart';
 import '../../models/parkingSpace.dart';
 import 'canRentDetail.dart';
 
-// 顯示可租借車位的頁面
+// main rent_screen.dart
+// 顯示可租借車位的列表
 class CanRentList extends StatefulWidget {
   const CanRentList({Key? key}) : super(key: key);
 
@@ -50,42 +51,6 @@ class _CanRentListState extends State<CanRentList> with TickerProviderStateMixin
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      hintText: '輸入租用開始日期時間',
-                      border: OutlineInputBorder(),
-                    ),
-                    onTap: () {
-                      // TODO: 在這裡加入選擇日期時間的功能
-                    },
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      hintText: '租用小時',
-                      border: OutlineInputBorder(),
-                    ),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(2),
-                    ],
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      setState(() {
-                        // TODO 只能輸入數字
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(

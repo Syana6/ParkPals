@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:parkpals/rentView/rent_screen.dart';
-import '../models/fakeData.dart';
-import '../models/parkingSpace.dart';
-import 'rent_screen_widges/canRentDetail.dart';
+import 'ui_view/omni_datetime_picker.dart';
+import 'ui_view/select_date_view.dart';
 
+// main main.dart
 // 租借主頁面
 class RentHomeScreen extends StatefulWidget {
   const RentHomeScreen({Key? key, required this.title}) : super(key: key);
@@ -33,8 +31,9 @@ class _RentHomeScreenState extends State<RentHomeScreen> with TickerProviderStat
   }
 
   Widget build (BuildContext context) {
-     return RentScreen(
+    return SelectDateView();
+    //  return RentScreen(
 
-     );
+    //  );
   }
 }
