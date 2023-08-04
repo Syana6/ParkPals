@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'ui_view/omni_datetime_picker.dart';
-import 'ui_view/select_date_view.dart';
+import 'rent_screen.dart';
 
 // main main.dart
 // 租借主頁面
 class RentHomeScreen extends StatefulWidget {
-  const RentHomeScreen({Key? key, required this.title}) : super(key: key);
-  final String title; // TODO: 再思考下這邊要放什麼文字
+  const RentHomeScreen({Key? key}) : super(key: key);
 
   @override
   _RentHomeScreenState createState() => _RentHomeScreenState();
@@ -31,9 +29,8 @@ class _RentHomeScreenState extends State<RentHomeScreen> with TickerProviderStat
   }
 
   Widget build (BuildContext context) {
-    return SelectDateView();
-    //  return RentScreen(
-
-    //  );
+    return RentScreen(
+        mainScreenAnimationController: animationController,
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
+// 時間日期選擇器
 class SelectDateView extends StatefulWidget {
   const SelectDateView({super.key});
 
@@ -31,7 +32,7 @@ class _SelectDateViewState extends State<SelectDateView> {
               controller: _textDateController,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(16),
-                hintText: '想什麼時候借?',
+                hintText: '想借什麼時候?',
                 hintStyle: const TextStyle(fontSize: 16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),

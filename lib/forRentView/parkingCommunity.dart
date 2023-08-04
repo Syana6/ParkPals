@@ -8,8 +8,7 @@ import '../models/parkingSpace.dart';
 // todo： 尚未登錄過車位的使用者，要先登錄車位才能看到這個頁面
 
 class parkingCommunity extends StatefulWidget {
-  const parkingCommunity({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const parkingCommunity({Key? key}) : super(key: key);
 
   @override
   _listParkings createState() => _listParkings();
@@ -38,9 +37,6 @@ class _listParkings extends State<parkingCommunity> with TickerProviderStateMixi
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: ListView.builder(
         itemCount: communities.length,
         itemBuilder: (context, index) {

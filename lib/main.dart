@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:parkpals/rentView/rent_home_screen.dart';
+import 'app_theme.dart';
 import 'forRentView/parkingCommunity.dart';
 
 void main() {
@@ -11,21 +16,31 @@ class ParkPALsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // 設定狀態欄的背景顏色為透明
+      statusBarIconBrightness: Brightness.dark, // 設置狀態欄上的圖標（如時間、電池狀態等）的顏色為深色
+      statusBarBrightness: // 設置狀態欄的亮度
+          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.white, // 設置導航欄的背景顏色為白色
+      systemNavigationBarDividerColor: Colors.transparent, // 設置導航欄分隔線的顏色為透明，即不顯示分隔線
+      systemNavigationBarIconBrightness: Brightness.dark, // 設置導航欄上的圖標（如返回按鈕、最近按鈕等）的顏色為深色
+    ));
     return MaterialApp(
-      title: '社區車位租借',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: AppTheme.textTheme,
+        platform: TargetPlatform.iOS,
       ),
-      // todo: 這裡要改成登入頁面
-      home: const HomePage(title: '{社區名稱} - 社區停車位租借友善互助系統'),
+      title: '社區車位租借',
+      // TODO: 這裡要加入登入頁面
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -33,7 +48,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 1; // 預設
-  final PageController _pageController = PageController(initialPage: 1); // match with initial index
+  final PageController _pageController =
+      PageController(initialPage: 1); // match with initial index
 
   void _onItemTapped(int index) {
     _pageController.animateToPage(
@@ -48,16 +64,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: PageView(
           controller: _pageController,
           children: const [
-            parkingCommunity(title: '我上架的車位'),
-            RentHomeScreen(title: '可租借車位'),
+            parkingCommunity(),
+            RentHomeScreen(),
             // TODO: Add your 3rd page here
           ],
         ),
