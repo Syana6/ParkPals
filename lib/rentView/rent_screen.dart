@@ -82,16 +82,16 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // ListView UI 注入
   void addAllListData() {
-    const int count = 1; // 目前加入到這個頁面的UI Widget
+    const int count = 3; // 目前加入到這個頁面的UI Widget
 
     listViews.add(
       SelectDateListView(
           mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
               CurvedAnimation(
                   parent: widget.mainScreenAnimationController!,
-                  curve: const Interval((1 / 9) * 3, 1.0,
+                  curve: const Interval((1 / (count * 3)) * 3, 1.0,
                       curve: Curves.fastOutSlowIn))),
-          mainScreenAnimationController: widget.mainScreenAnimationController,
+          mainScreenAnimationController: widget.mainScreenAnimationController!,
         ),
       );    
   }

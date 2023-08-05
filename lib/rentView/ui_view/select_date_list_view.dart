@@ -180,15 +180,11 @@ class DataView extends StatelessWidget {
                               ),
                             ),
                             // 控制每一個物件相等大小
-                            const Positioned(
-                              top: 0,
-                              left: 8,
-                              child: SizedBox(
+                             
+                              const SizedBox(
                                 width: 50,
                                 height: 0,
-                                // child: dateData != null ? Image.asset(dateData!.imagePath!):null,
                               ),
-                            )
                           ],
                         ),
                       ),
