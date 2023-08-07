@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'rent_screen_theme.dart';
+import 'ui_view/drop_down_button.dart';
 import 'ui_view/select_date_list_view.dart';
 
 // main rent_home_screen.dart
@@ -64,6 +65,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
           children: <Widget>[
             getMainListViewUI(), // 這裡是 ListView Body 的 UI
             getAppBarUI(), // 這裡是 AppBar 最上層固定 的 UI
+            // 避免被下面狀態欄覆蓋
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
@@ -82,18 +84,32 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // ListView UI 注入
   void addAllListData() {
-    const int count = 3; // 目前加入到這個頁面的UI Widget
+    const int count = 5; // 目前加入到這個頁面的UI Widget
 
+    // 社區下拉選單
+    listViews.add(
+      DropDownButton(
+          mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(
+                  parent: widget.mainScreenAnimationController!,
+                  curve: const Interval((1 / (count * 2)) * 1, 1.0,
+                      curve: Curves.fastOutSlowIn))),
+          mainScreenAnimationController: widget.mainScreenAnimationController!,
+        ),
+      );
+
+    // 時間選擇器
     listViews.add(
       SelectDateListView(
           mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
               CurvedAnimation(
                   parent: widget.mainScreenAnimationController!,
-                  curve: const Interval((1 / (count * 3)) * 3, 1.0,
+                  curve: const Interval((1 / (count)) * 2, 1.0,
                       curve: Curves.fastOutSlowIn))),
           mainScreenAnimationController: widget.mainScreenAnimationController!,
         ),
-      );    
+      );
+      
   }
 
   // ListView Body 的 UI
@@ -107,9 +123,9 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
+              // 從 AppBar 的下方開始顯示，避免被 AppBar 覆蓋
               top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
+                  MediaQuery.of(context).padding.top, // 狀態欄的高度
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
             itemCount: listViews.length,
@@ -157,7 +173,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 16,
+                            left: 6,
                             right: 16,
                             top: 16 - 8.0 * topBarOpacity,
                             bottom: 12 - 8.0 * topBarOpacity),
@@ -180,6 +196,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
+                            // 左邊箭頭
                             SizedBox(
                               height: 38,
                               width: 38,
@@ -196,6 +213,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
+                            // 15 May
                             const Padding(
                               padding: EdgeInsets.only(
                                 left: 8,
@@ -225,6 +243,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                 ],
                               ),
                             ),
+                            // 右邊箭頭
                             SizedBox(
                               height: 38,
                               width: 38,

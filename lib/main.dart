@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:parkpals/rentView/rent_home_screen.dart';
 import 'app_theme.dart';
 import 'forRentView/parkingCommunity.dart';
+import 'rentView/ui_view/drop_down_button.dart';
 
 void main() {
   runApp(const ParkPALsApp());
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     _animationController = AnimationController(
-        duration: const Duration(milliseconds: 1200), vsync: this);
+        duration: const Duration(milliseconds: 600), vsync: this);
 
     // 初始化租借畫面
     tabBody =
@@ -76,12 +77,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       // 切換頁面後動畫倒轉，改變index
       setState(() => _currentIndex = index);
     });
-    if (index == 1) {
-      tabBody =
-          RentHomeScreen(mainScreenAnimationController: _animationController);
-    } else if (index == 0) {
+    
+    if (index == 0) {
       tabBody = parkingCommunity();
     }
+    else if (index == 1) {
+      tabBody =
+          RentHomeScreen(mainScreenAnimationController: _animationController);
+    } 
+    else if (index == 2) {
+      // tabBody =
+      //     DropDownButton(mainScreenAnimationController: _animationController);
+    }  
   }
 
   @override
