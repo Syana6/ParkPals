@@ -1,7 +1,8 @@
+import 'package:ej_selector/ej_selector.dart';
 import 'package:flutter/material.dart';
-import 'rent_screen_theme.dart';
-import 'ui_view/drop_down_button.dart';
-import 'ui_view/select_date_list_view.dart';
+import '../rent_screen_theme.dart';
+import '../ui_view/drop_down_button.dart';
+import '../ui_view/select_date_list_view.dart';
 
 // main rent_home_screen.dart
 // 租借主頁面Body 使用Widge<ListView> 包裝所有功能Widget
@@ -89,33 +90,36 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     // 社區下拉選單
     listViews.add(
       DropDownButton(
-          mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.mainScreenAnimationController!,
-                  curve: const Interval((1 / (count * 2)) * 1, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          mainScreenAnimationController: widget.mainScreenAnimationController!,
-        ),
-      );
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.mainScreenAnimationController!,
+                curve: const Interval((1 / (count * 2)) * 1, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.mainScreenAnimationController!,
+      ),
+    );
 
     // 時間選擇器
     listViews.add(
       SelectDateListView(
-          mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.mainScreenAnimationController!,
-                  curve: const Interval((1 / (count)) * 2, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          mainScreenAnimationController: widget.mainScreenAnimationController!,
-        ),
-      );
-      
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.mainScreenAnimationController!,
+                curve: const Interval((1 / (count)) * 2, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.mainScreenAnimationController!,
+      ),
+    );
+
+    listViews.add(
+      EJSelectorUI(),
+    );
   }
 
   // ListView Body 的 UI
   Widget getMainListViewUI() {
     return FutureBuilder<bool>(
-      future: getData(),
+      future: getData(), // 延遲顯示
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();
@@ -182,7 +186,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(18.0),
                                 child: Text(
                                   '我想借車位',
                                   textAlign: TextAlign.left,
@@ -273,10 +277,72 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
       ],
     );
   }
-  
+
   // Delay Time
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
-  }  
+  }
+
+  final items = <ItemModel>[
+    ItemModel(1, 'First Item'),
+    ItemModel(2, 'Second Item'),
+    ItemModel(3, 'Third Item'),
+    ItemModel(4, 'Forth Item'),
+    ItemModel(5, 'Fifth Item'),
+  ];
+
+  Widget EJSelectorUI() {
+    return EJSelectorButton<ItemModel>(
+      useValue: false,
+      hint: Text(
+        'Click to choose',
+        style: TextStyle(fontSize: 16, color: Colors.black),
+      ),
+      buttonBuilder: (child, value) => Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 150,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.white,
+        ),
+        child: value != null
+            ? Text(
+                value.name,
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              )
+            : child,
+      ),
+      selectedWidgetBuilder: (valueOfSelected) => Container(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+        child: Text(
+          valueOfSelected.name,
+          style: TextStyle(fontSize: 20, color: Colors.blue),
+        ),
+      ),
+      items: items
+          .map(
+            (item) => EJSelectorItem(
+              value: item,
+              widget: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                child: Text(
+                  item.name,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class ItemModel {
+  ItemModel(this.id, this.name);
+
+  final int id;
+  final String name;
 }

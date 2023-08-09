@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-// 下拉選單
+// 社區下拉選單
 class DropDownButton extends StatefulWidget {
   const DropDownButton(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
