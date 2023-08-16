@@ -87,18 +87,6 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   void addAllListData() {
     const int count = 5; // 目前加入到這個頁面的UI Widget
 
-    // 社區下拉選單
-    listViews.add(
-      DropDownButton(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.mainScreenAnimationController!,
-                curve: const Interval((1 / (count * 2)) * 1, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.mainScreenAnimationController!,
-      ),
-    );
-
     // 時間選擇器
     listViews.add(
       SelectDateListView(
@@ -111,6 +99,45 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
       ),
     );
 
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
+    listViews.add(
+      EJSelectorUI(),
+    );
     listViews.add(
       EJSelectorUI(),
     );
@@ -128,7 +155,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
             controller: scrollController,
             padding: EdgeInsets.only(
               // 從 AppBar 的下方開始顯示，避免被 AppBar 覆蓋
-              top: AppBar().preferredSize.height +
+              top: AppBar().preferredSize.height + 30 +
                   MediaQuery.of(context).padding.top, // 狀態欄的高度
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
@@ -153,10 +180,12 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
           builder: (BuildContext context, Widget? child) {
             return FadeTransition(
               opacity: topBarAnimation!,
+              // transform滑動時在螢幕上自由變換和定位子 Widget
               child: Transform(
                 transform: Matrix4.translationValues(
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
+                  // BoxDecoration處理topBarOpacity變化時的透明度
                   decoration: BoxDecoration(
                     color: RentScreenTheme.white.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
@@ -176,27 +205,41 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                         height: MediaQuery.of(context).padding.top,
                       ),
                       Padding(
+                        // 處理topBarOpacity變化時的top與bottom
                         padding: EdgeInsets.only(
                             left: 6,
                             right: 16,
                             top: 16 - 8.0 * topBarOpacity,
-                            bottom: 12 - 8.0 * topBarOpacity),
+                            bottom: 8 - 8.0 * topBarOpacity),
+                            // child: Column
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: Text(
-                                  '我想借車位',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontFamily: RentScreenTheme.fontName,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 22 + 6 - 6 * topBarOpacity,
-                                    letterSpacing: 1.2,
-                                    color: RentScreenTheme.darkerText,
-                                  ),
+                                padding: const EdgeInsets.fromLTRB(20, 0, 18, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      '我想借車位',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: RentScreenTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 22 + 6 - 6 * topBarOpacity,
+                                        letterSpacing: 1.2,
+                                        color: RentScreenTheme.darkerText,
+                                      ),
+                                    ),
+                                    // 選擇社區icon
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 5, 1, 0),
+                                      child: Icon(Icons.sort,
+                                        size: 42 - 6 * topBarOpacity,
+                                        color: RentScreenTheme.primaryColor),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -220,10 +263,12 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                             // 15 May
                             const Padding(
                               padding: EdgeInsets.only(
+                                top: 8,
                                 left: 8,
                                 right: 8,
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Padding(
                                     padding: EdgeInsets.only(right: 8),
@@ -295,7 +340,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   Widget EJSelectorUI() {
     return EJSelectorButton<ItemModel>(
       useValue: false,
-      hint: Text(
+      hint: const Text(
         'Click to choose',
         style: TextStyle(fontSize: 16, color: Colors.black),
       ),
@@ -310,7 +355,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
         child: value != null
             ? Text(
                 value.name,
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                style: const TextStyle(fontSize: 16, color: Colors.black),
               )
             : child,
       ),

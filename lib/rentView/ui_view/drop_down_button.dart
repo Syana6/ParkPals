@@ -2,6 +2,20 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 // 社區下拉選單
+// 使用方式
+/*
+    listViews.add(
+      DropDownButton(
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.mainScreenAnimationController!,
+                curve: const Interval((1 / (count * 2)) * 1, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.mainScreenAnimationController!,
+      ),
+    );
+*/
+
 class DropDownButton extends StatefulWidget {
   const DropDownButton(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
