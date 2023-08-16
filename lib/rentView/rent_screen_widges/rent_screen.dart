@@ -155,7 +155,8 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
             controller: scrollController,
             padding: EdgeInsets.only(
               // 從 AppBar 的下方開始顯示，避免被 AppBar 覆蓋
-              top: AppBar().preferredSize.height + 30 +
+              top: AppBar().preferredSize.height +
+                  45 +
                   MediaQuery.of(context).padding.top, // 狀態欄的高度
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
@@ -204,109 +205,155 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                       SizedBox(
                         height: MediaQuery.of(context).padding.top,
                       ),
+                      // 第一行
                       Padding(
-                        // 處理topBarOpacity變化時的top與bottom
-                        padding: EdgeInsets.only(
-                            left: 6,
-                            right: 16,
-                            top: 16 - 8.0 * topBarOpacity,
-                            bottom: 8 - 8.0 * topBarOpacity),
-                            // child: Column
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 18, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      '我想借車位',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontFamily: RentScreenTheme.fontName,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 22 + 6 - 6 * topBarOpacity,
-                                        letterSpacing: 1.2,
-                                        color: RentScreenTheme.darkerText,
+                          // 處理topBarOpacity變化時的top與bottom
+                          padding: EdgeInsets.only(
+                              left: 6,
+                              right: 16,
+                              top: 16 - 8.0 * topBarOpacity,
+                              bottom: 8 - 8.0 * topBarOpacity),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 18, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            '我想借車位',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  RentScreenTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize:
+                                                  22 + 6 - 6 * topBarOpacity,
+                                              letterSpacing: 1.2,
+                                              color: RentScreenTheme.darkerText,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    // 選擇社區icon
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 5, 1, 0),
-                                      child: Icon(Icons.sort,
-                                        size: 42 - 6 * topBarOpacity,
-                                        color: RentScreenTheme.primaryColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // 左邊箭頭
-                            SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    color: RentScreenTheme.grey,
                                   ),
-                                ),
-                              ),
-                            ),
-                            // 15 May
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 8,
-                                left: 8,
-                                right: 8,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                      color: RentScreenTheme.grey,
-                                      size: 18,
+                                  // 左邊箭頭
+                                  SizedBox(
+                                    height: 38,
+                                    width: 38,
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(32.0)),
+                                      onTap: () {},
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.keyboard_arrow_left,
+                                          color: RentScreenTheme.grey,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    '15 May',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: RentScreenTheme.fontName,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 18,
-                                      letterSpacing: -0.2,
-                                      color: RentScreenTheme.darkerText,
+                                  // 15 May
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 8,
+                                      left: 8,
+                                      right: 8,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 8),
+                                          child: Icon(
+                                            Icons.calendar_today,
+                                            color: RentScreenTheme.grey,
+                                            size: 18,
+                                          ),
+                                        ),
+                                        Text(
+                                          '15 May',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontFamily:
+                                                RentScreenTheme.fontName,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 18,
+                                            letterSpacing: -0.2,
+                                            color: RentScreenTheme.darkerText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // 右邊箭頭
+                                  SizedBox(
+                                    height: 38,
+                                    width: 38,
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(32.0)),
+                                      onTap: () {},
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.keyboard_arrow_right,
+                                          color: RentScreenTheme.grey,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            // 右邊箭頭
+                            ],
+                          )),
+                      // 第二行
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 22, right: 16, bottom: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          // 選擇社區icon
+                          children: <Widget>[
                             SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: RentScreenTheme.grey,
-                                  ),
+                              height: 58,
+                              width: 55,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: InkWell(
+                                  highlightColor: Colors.transparent,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(32.0)),
+                                  onTap: () {},
+                                  child: Icon(Icons.sort,
+                                      size: 42 - 6 * topBarOpacity,
+                                      color: RentScreenTheme.primaryColor),
                                 ),
+                              ),
+                            ),
+                            // 搜尋車位
+                            Expanded(
+                              child: TextField(
+                                style: const TextStyle(fontSize: 18), // 调整文本大小
+                                decoration: const InputDecoration(
+                                    hintText: '搜尋車位',
+                                    border: UnderlineInputBorder(),
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        5, 8, 0, 0) // 调整文本位置
+                                    ),
+                                onChanged: (value) {
+                                  searchValue = value;
+                                  searchParkingSpaces();
+                                },
                               ),
                             ),
                           ],
