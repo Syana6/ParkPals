@@ -10,8 +10,8 @@ class SelectItemMsgBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return EJSelectorButton<ItemModel>(
       useValue: false,
-      hint: const Icon(Icons.sort,
-          size: 42, color: RentScreenTheme.primaryColor),
+      // 初始顯示按鈕Widget
+      hint: const Icon(Icons.sort, size: 42, color: RentScreenTheme.primaryColor),
       // hint: const Text(
       //   'Click to choose',
       //   style: TextStyle(fontSize: 16, color: Colors.black),
@@ -24,13 +24,16 @@ class SelectItemMsgBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           color: Colors.transparent,
         ),
-        child: value != null
-            ? Text(
-                value.name,
-                style: const TextStyle(fontSize: 16, color: Colors.black),
-              )
-            : child,
+        // 選擇Item後要用什麼Widget替換
+        child: const Icon(Icons.sort, size: 42, color: RentScreenTheme.primaryColor),
+        // child: value != null
+        //     ? Text(
+        //         value.name,
+        //         style: const TextStyle(fontSize: 16, color: Colors.black),
+        //       )
+        //     : child,
       ),
+      // Item被選擇後的事件
       selectedWidgetBuilder: (valueOfSelected) => Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
         child: Text(
@@ -55,7 +58,8 @@ class SelectItemMsgBox extends StatelessWidget {
           .toList(),
     );
   }
-    final items = <ItemModel>[
+
+  final items = <ItemModel>[
     ItemModel(1, 'First Item'),
     ItemModel(2, 'Second Item'),
     ItemModel(3, 'Third Item'),
