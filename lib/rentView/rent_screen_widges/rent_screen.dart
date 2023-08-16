@@ -1,8 +1,7 @@
-import 'package:ej_selector/ej_selector.dart';
 import 'package:flutter/material.dart';
 import '../rent_screen_theme.dart';
-import '../ui_view/drop_down_button.dart';
 import '../ui_view/select_date_list_view.dart';
+import '../ui_view/select_item_msgbox.dart';
 
 // main rent_home_screen.dart
 // 租借主頁面Body 使用Widge<ListView> 包裝所有功能Widget
@@ -97,49 +96,6 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.mainScreenAnimationController!,
       ),
-    );
-
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
-    );
-    listViews.add(
-      EJSelectorUI(),
     );
   }
 
@@ -322,24 +278,25 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                             left: 22, right: 16, bottom: 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          // 選擇社區icon
                           children: <Widget>[
-                            SizedBox(
-                              height: 58,
-                              width: 55,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: InkWell(
-                                  highlightColor: Colors.transparent,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(32.0)),
-                                  onTap: () {},
-                                  child: Icon(Icons.sort,
-                                      size: 42 - 6 * topBarOpacity,
-                                      color: RentScreenTheme.primaryColor),
-                                ),
-                              ),
-                            ),
+                            // 選擇社區icon
+                            SelectItemMsgBox(),
+                            // SizedBox(
+                            //   height: 58,
+                            //   width: 55,
+                            //   child: Align(
+                            //     alignment: Alignment.centerLeft,
+                            //     child: InkWell(
+                            //       highlightColor: Colors.transparent,
+                            //       borderRadius: const BorderRadius.all(
+                            //           Radius.circular(32.0)),
+                            //       onTap: () {},
+                            //       child: Icon(Icons.sort,
+                            //           size: 42 - 6 * topBarOpacity,
+                            //           color: RentScreenTheme.primaryColor),
+                            //     ),
+                            //   ),
+                            // ),
                             // 搜尋車位
                             Expanded(
                               child: TextField(
@@ -375,66 +332,4 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
   }
-
-  final items = <ItemModel>[
-    ItemModel(1, 'First Item'),
-    ItemModel(2, 'Second Item'),
-    ItemModel(3, 'Third Item'),
-    ItemModel(4, 'Forth Item'),
-    ItemModel(5, 'Fifth Item'),
-  ];
-
-  Widget EJSelectorUI() {
-    return EJSelectorButton<ItemModel>(
-      useValue: false,
-      hint: const Text(
-        'Click to choose',
-        style: TextStyle(fontSize: 16, color: Colors.black),
-      ),
-      buttonBuilder: (child, value) => Container(
-        alignment: Alignment.center,
-        height: 60,
-        width: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: Colors.white,
-        ),
-        child: value != null
-            ? Text(
-                value.name,
-                style: const TextStyle(fontSize: 16, color: Colors.black),
-              )
-            : child,
-      ),
-      selectedWidgetBuilder: (valueOfSelected) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-        child: Text(
-          valueOfSelected.name,
-          style: TextStyle(fontSize: 20, color: Colors.blue),
-        ),
-      ),
-      items: items
-          .map(
-            (item) => EJSelectorItem(
-              value: item,
-              widget: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                child: Text(
-                  item.name,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
-class ItemModel {
-  ItemModel(this.id, this.name);
-
-  final int id;
-  final String name;
 }
