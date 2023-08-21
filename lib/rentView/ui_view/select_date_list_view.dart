@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import '../rent_screen_theme.dart';
 
@@ -24,8 +26,8 @@ class _SelectDateListState extends State<SelectDateListView>
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
 
-    // 產生時間卡片內容
-    getDateList();
+    // 產生WeekDaylist時間卡片結構
+    generateDateList();
     super.initState();
   }
 
@@ -34,66 +36,33 @@ class _SelectDateListState extends State<SelectDateListView>
     return true;
   }
 
-  // 時間卡片內容
-  void getDateList() {
-    WeekDaylist = <WeekDay>[
-      WeekDay(
-        dateTime: DateTime.now(),
-        week: mapWeekday(DateTime.now()),
-        date: DateTime.now().day,
-        startColor: '#FA7D82',
-        endColor: '#FFB295',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 1)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 1))),
-        date: DateTime.now().add(const Duration(days: 1)).day,
-        startColor: '#738AE6',
-        endColor: '#5C5EDD',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 2)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 2))),
-        date: DateTime.now().add(const Duration(days: 2)).day,
-        startColor: '#FE95B6',
-        endColor: '#FF5287',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 3)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 3))),
-        date: DateTime.now().add(const Duration(days: 3)).day,
-        startColor: '#6F72CA',
-        endColor: '#1E1466',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 4)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 4))),
-        date: DateTime.now().add(const Duration(days: 4)).day,
-        startColor: '#6F72CA',
-        endColor: '#1E1466',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 5)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 5))),
-        date: DateTime.now().add(const Duration(days: 5)).day,
-        startColor: '#6F72CA',
-        endColor: '#1E1466',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 6)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 6))),
-        date: DateTime.now().add(const Duration(days: 6)).day,
-        startColor: '#6F72CA',
-        endColor: '#1E1466',
-      ),
-      WeekDay(
-        dateTime: DateTime.now().add(const Duration(days: 31)),
-        week: mapWeekday(DateTime.now().add(const Duration(days: 31))),
-        date: DateTime.now().add(const Duration(days: 31)).day,
-        startColor: '#6F72CA',
-        endColor: '#1E1466',
-      ),
-    ];
+  // 處理按下時間卡片selected變換
+  void WeekDaySelected(WeekDay wd) {
+    WeekDaylist?.forEach((weekday) {
+      if (wd == weekday) {
+        weekday.selected = true;
+      } else {
+        weekday.selected = false;
+      }
+      setState(() {
+      });
+    });
+  }
+
+  // 產稱時間8張卡片結構放入WeekDaylist
+  void generateDateList() {
+    final today = DateTime.now();
+    WeekDaylist = List.generate(8, (index) {
+      final date = today.add(Duration(days: index));
+      final weekdayInfo = mapWeekday(date);
+      return WeekDay(
+        dateTime: date,
+        week: weekdayInfo.week,
+        date: date.day,
+        startColor: weekdayInfo.startColor,
+        endColor: weekdayInfo.endColor,
+      );
+    });
   }
 
   @override
@@ -135,6 +104,7 @@ class _SelectDateListState extends State<SelectDateListView>
                     weekday: WeekDaylist![index],
                     animation: animation,
                     animationController: animationController!,
+                    onDateTab: WeekDaySelected,
                   );
                 },
               ),
@@ -146,14 +116,20 @@ class _SelectDateListState extends State<SelectDateListView>
   }
 }
 
+// 時間卡片Widget
 class DataView extends StatelessWidget {
-  const DataView(
-      {Key? key, this.weekday, this.animationController, this.animation})
-      : super(key: key);
+  const DataView({
+    Key? key,
+    this.weekday,
+    this.animationController,
+    this.animation,
+    required this.onDateTab,
+  }) : super(key: key);
 
   final WeekDay? weekday;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final Function onDateTab;
 
   @override
   Widget build(BuildContext context) {
@@ -163,129 +139,133 @@ class DataView extends StatelessWidget {
         return FadeTransition(
           // 淡入淡出動畫效果
           opacity: animation!,
-          child: Transform(
+          child: Transform.translate(
             // 水平方向的位移。animation!.value 是動畫的值，從 0.0 到 1.0。當動畫進行時，該值從 0.0 遞增到 1.0
-            transform: Matrix4.translationValues(
-                100 * (1.0 - animation!.value), 0.0, 0.0),
+            offset: Offset(100 * (1.0 - animation!.value), 0.0),
             child: SizedBox(
               width: 85,
-              child: Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        // 外框的邊界間距
-                        top: 22,
-                        left: 6,
-                        right: 6,
-                        bottom: 3),
-                    child: InkWell(
-                      onTap: () {
-                        print("TODO: Click Event " + weekday!.week); // TODO:
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          // 定義矩形框，裝飾（如 Container、Card 等）顏色、邊框、陰影、漸變等的外觀
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                // 框的陰影
-                                color: HexColor(weekday!.endColor)
-                                    .withOpacity(0.6),
-                                offset: const Offset(1.1, 3.0),
-                                blurRadius: 8.0),
-                          ],
-                          gradient: LinearGradient(
-                            // 框的漸變背景
-                            colors: <HexColor>[
-                              HexColor(weekday!.startColor),
-                              HexColor(weekday!.endColor),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            // 框的圓角
-                            bottomRight: Radius.circular(8.0),
-                            bottomLeft: Radius.circular(8.0),
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                        ),
-                        // 內文顯示的定義
-                        child: Padding(
-                          // 控制框框跟周遭的間距
-                          padding: const EdgeInsets.only(
-                              top: 13, left: 13, right: 13, bottom: 13),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center, // 水平置中
-                            crossAxisAlignment:
-                                CrossAxisAlignment.center, // 垂直置中
-                            children: <Widget>[
-                              Text(
-                                weekday!.week,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontFamily: RentScreenTheme.fontName,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  letterSpacing: 0.2,
-                                  color: RentScreenTheme.white,
-                                ),
-                              ),
-                              // 控制上下間距
-                              const Padding(
-                                padding: EdgeInsets.only(top: 10),
-                              ),
-                              Text(
-                                weekday!.date.toString(),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontFamily: RentScreenTheme.fontName,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 24,
-                                  letterSpacing: 0.2,
-                                  color: RentScreenTheme.white,
-                                ),
-                              ),
-                              // 控制每一個物件相等大小
-                              const SizedBox(
-                                width: 50,
-                                height: 0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: _buildWeekDayContainer(),
             ),
           ),
         );
       },
     );
   }
+
+  Widget _buildWeekDayContainer() {
+    final bool isSelected = weekday!.selected;
+    final List<Color> selectedColors = isSelected
+        ? [RentScreenTheme.primaryColor, RentScreenTheme.nearlyBlue]  // 被選擇的顏色
+        : [RentScreenTheme.nearlyWhite, RentScreenTheme.nearlyWhite]; // 未被選擇的顏色
+
+    return Padding(
+      padding: const EdgeInsets.only(
+          // 外框的邊界間距
+          top: 22,
+          left: 6,
+          right: 6,
+          bottom: 3),
+      child: InkWell(
+        onTap: () {
+          onDateTab(weekday); // 處理按下日期卡片的事件
+          print("TODO: Click Event " + weekday!.week); // TODO:
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            // 定義矩形框，裝飾（如 Container、Card 等）顏色、邊框、陰影、漸變等的外觀
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                // 框的陰影
+                color: HexColor(weekday!.endColor).withOpacity(0.6),
+                offset: const Offset(1.1, 3.0),
+                blurRadius: 8.0,
+              ),
+            ],
+            gradient: LinearGradient(
+              // 框的漸層背景
+              colors: selectedColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(
+              width: 1,
+              style: BorderStyle.solid,
+              color: HexColor(weekday!.startColor),
+            ),
+            // 框的圓角
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          ),
+          // 內文顯示的定義
+          child: Padding(
+            // 控制框框跟周遭的間距
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center, // 水平置中
+              crossAxisAlignment: CrossAxisAlignment.center, // 垂直置中
+              children: <Widget>[
+                Text(
+                  weekday!.week,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: RentScreenTheme.fontName,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    letterSpacing: 0.2,
+                    color: RentScreenTheme.deactivatedText,
+                  ),
+                ),
+                // 控制上下間距
+                const SizedBox(height: 8),
+                Text(
+                  weekday!.date.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: RentScreenTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
+                    letterSpacing: 0.2,
+                    color: RentScreenTheme.darkText,
+                  ),
+                ),
+                // 控制每一個物件相等大小
+                const SizedBox(width: 50, height: 0),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-// 周轉英文簡稱(SelectDateListView用)
-String mapWeekday(DateTime date) {
+// 周轉英文簡稱 & 六日顏色(SelectDateListView用)
+WeekDay mapWeekday(DateTime date) {
+  final defaultColor = WeekDay(
+    week: '未知',
+    startColor: '#6F72CA',
+    endColor: '#1E1466',
+  );
+
   switch (date.weekday) {
     case 1:
-      return 'Mon';
     case 2:
-      return 'Tue';
     case 3:
-      return 'Wed';
     case 4:
-      return 'Thu';
     case 5:
-      return 'Fri';
+      return WeekDay(
+        week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'][date.weekday - 1],
+        startColor: '#6F72CA',
+        endColor: '#1E1466',
+      );
     case 6:
-      return 'Mon';
     case 7:
-      return 'Mon';
+      return WeekDay(
+        week: ['Sat', 'Sun'][date.weekday - 6],
+        startColor: '#FA7D82',
+        endColor: '#FFB295',
+      );
     default:
-      return '未知';
+      return defaultColor;
   }
 }
 
@@ -296,6 +276,7 @@ class WeekDay {
   int date;
   String startColor;
   String endColor;
+  bool selected;
 
   WeekDay({
     this.dateTime,
@@ -303,5 +284,6 @@ class WeekDay {
     this.date = 0,
     this.startColor = '',
     this.endColor = '',
+    this.selected = false,
   });
 }
