@@ -155,7 +155,7 @@ class DataView extends StatelessWidget {
   Widget _buildWeekDayContainer() {
     final bool isSelected = weekday!.selected;
     final List<Color> selectedColors = isSelected
-        ? [RentScreenTheme.primaryColor, RentScreenTheme.nearlyBlue]  // 被選擇的顏色
+        ? [RentScreenTheme.primaryColor, RentScreenTheme.spacer]  // 被選擇的顏色
         : [RentScreenTheme.nearlyWhite, RentScreenTheme.nearlyWhite]; // 未被選擇的顏色
 
     return Padding(
