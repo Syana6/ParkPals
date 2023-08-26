@@ -78,9 +78,8 @@ class _SelectDateListState extends State<SelectDateListView>
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: widget.mainScreenAnimation!,
-          child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
+          child: Transform.translate(
+            offset: Offset(0.0, 30 * (1.0 - widget.mainScreenAnimation!.value)),
             child: SizedBox(
               height: 120, // 外框的高度
               width: double.infinity,
