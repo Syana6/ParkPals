@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:parkpals/forRentView/parkingSpaceEditPage.dart';
-import '../models/fakeData.dart';
+import '../rentView/models/fakeData.dart';
 import '../models/parkingSpace.dart';
 
 // 顯示指定社區上架車位的頁面

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/fakeData.dart';
+import '../models/fakeData.dart';
 import '../../models/parkingSpace.dart';
 import 'canRentDetail.dart';
  
 // main rent_screen.dart
 // 顯示可租借車位的列表
+// Demo 未使用
 class CanRentList extends StatefulWidget {
   const CanRentList(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
