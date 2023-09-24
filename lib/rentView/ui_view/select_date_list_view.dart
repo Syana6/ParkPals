@@ -6,11 +6,13 @@ import '../rent_screen_theme.dart';
 // 時間卡片選擇器
 class SelectDateListView extends StatefulWidget {
   const SelectDateListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation, required this.getDateIndex, required this.setDateIndex})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final int Function() getDateIndex; // 從parent取得選擇的日期index
+  final Function(int) setDateIndex; // 紀錄選擇的日期index給parent
 
   @override
   _SelectDateListState createState() => _SelectDateListState();
@@ -41,6 +43,7 @@ class _SelectDateListState extends State<SelectDateListView>
     WeekDaylist?.forEach((weekday) {
       if (wd == weekday) {
         weekday.selected = true;
+        widget.setDateIndex!(wd.weekIndex!);
       } else {
         weekday.selected = false;
       }
@@ -55,12 +58,15 @@ class _SelectDateListState extends State<SelectDateListView>
     WeekDaylist = List.generate(8, (index) {
       final date = today.add(Duration(days: index));
       final weekdayInfo = mapWeekday(date);
+
       return WeekDay(
         dateTime: date,
         week: weekdayInfo.week,
         date: date.day,
         startColor: weekdayInfo.startColor,
         endColor: weekdayInfo.endColor,
+        weekIndex : index,
+        selected: widget.getDateIndex() == index, // 取得存在放parent的index
       );
     });
   }
@@ -276,6 +282,7 @@ class WeekDay {
   String startColor;
   String endColor;
   bool selected;
+  int? weekIndex;
 
   WeekDay({
     this.dateTime,
@@ -283,6 +290,7 @@ class WeekDay {
     this.date = 0,
     this.startColor = '',
     this.endColor = '',
-    this.selected = false,
+    this.selected = false, 
+    this.weekIndex,
   });
 }

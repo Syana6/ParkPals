@@ -24,6 +24,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   final ScrollController scrollController =
       ScrollController(); // 監聽上面bar滑動的opacity
   double topBarOpacity = 0.0;
+  int onDateSelected = 0; // 記錄選擇時間的index
 
   @override
   void initState() {
@@ -58,6 +59,16 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     super.initState();
   }
 
+  // 提供Child Callback selected紀錄
+  int getWeekDaySelected() {
+    return this.onDateSelected;
+  }
+
+  // 提供Child Callback處理按下時間卡片selected紀錄
+  void setWeekDaySelected(int index) {
+    this.onDateSelected = index;
+  }
+
   Widget build(BuildContext context) {
     return Container(
       color: RentScreenTheme.background,
@@ -79,6 +90,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 搜尋車位
   void searchParkingSpaces() {
+    
     setState(() {
       // TODO: 處理weidget間的資料傳遞 模糊搜尋車位（名稱、樓層、車位編號、價格）
     });
@@ -91,21 +103,23 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
     // 時間選擇器
     listViews.add(
-      SelectDateListView(
+      SelectDateListView(key: UniqueKey(),
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.mainScreenAnimationController!,
                 curve: Interval((1 / (count)) * 1, 1.0,
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.mainScreenAnimationController!,
+        getDateIndex: getWeekDaySelected,
+        setDateIndex: setWeekDaySelected,
       ),
     );
 
     // 可租借車位列表
     for (var park in fakeParkingSpaces) {
       listViews.add(
-        CanRentObject(
-            // TODO: 要從API取得資訊，若canRentObjectCount最小10
+        CanRentObject(key: UniqueKey(),
+            // TODO: 要從API取得資訊
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
                     parent: widget.mainScreenAnimationController!,
@@ -141,6 +155,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
               widget.mainScreenAnimationController?.forward();
+              
               return listViews[index];
             },
           );
