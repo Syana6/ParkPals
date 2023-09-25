@@ -90,13 +90,13 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 搜尋車位
   void searchParkingSpaces() {
-    
     setState(() {
       // TODO: 處理weidget間的資料傳遞 模糊搜尋車位（名稱、樓層、車位編號、價格）
+
     });
   }
 
-  // ListView UI 注入
+  // 注入所有子widget UI
   void addAllListData() {
     int count = fakeParkingSpaces.length + 1; // 目前加入到這個頁面的UI Widget
     const int minCanRentObjectCount = 10; // 可租借的UI Widget 最小10
@@ -267,13 +267,13 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                         const Padding(
                                           padding: EdgeInsets.only(right: 8),
                                           child: Icon(
-                                            Icons.calendar_today,
+                                            Icons.car_rental_outlined,
                                             color: RentScreenTheme.grey,
                                             size: 18,
                                           ),
                                         ),
                                         Text(
-                                          '15 May',
+                                          '這邊改誰租借中',
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontFamily:

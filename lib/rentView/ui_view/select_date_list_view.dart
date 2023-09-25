@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import '../rent_screen_theme.dart';
 
@@ -39,7 +37,7 @@ class _SelectDateListState extends State<SelectDateListView>
   }
 
   // 處理按下時間卡片selected變換
-  void WeekDaySelected(WeekDay wd) {
+  void weekDaySelected(WeekDay wd) {
     WeekDaylist?.forEach((weekday) {
       if (wd == weekday) {
         weekday.selected = true;
@@ -109,7 +107,7 @@ class _SelectDateListState extends State<SelectDateListView>
                     weekday: WeekDaylist![index],
                     animation: animation,
                     animationController: animationController!,
-                    onDateTab: WeekDaySelected,
+                    onDateTab: weekDaySelected,
                   );
                 },
               ),
