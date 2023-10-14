@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkpals/rentView/rent_screen_theme.dart';
+import 'package:parkpals/toRentView/to_rent_screen_theme.dart';
 
 // UI TitleView
 class TitleView extends StatelessWidget {

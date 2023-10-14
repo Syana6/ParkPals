@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/parkingSpace.dart';
-import 'canRentDetail.dart';
+import '../models/responseModels/rent_object.dart';
+import 'to_rent_detail.dart';
 
 // main rent_screen.dart
 // 顯示可租借車位的列表

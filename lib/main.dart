@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parkpals/rentView/rent_home_screen.dart';
+import 'package:parkpals/toRentView/to_rent_home_screen.dart';
 import 'app_theme.dart';
-import 'forRentView/parkingCommunity.dart';
+import 'myRentView/parkingCommunity.dart';
 
 void main() {
   runApp(const ParkPALsApp());

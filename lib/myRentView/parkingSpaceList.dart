@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:parkpals/forRentView/parkingSpaceEditPage.dart';
-import '../rentView/models/fakeData.dart';
-import '../models/parkingSpace.dart';
+import 'package:parkpals/myRentView/parkingSpaceEditPage.dart';
+import '../toRentView/models/fakeData.dart';
+import '../toRentView/models/responseModels/rent_object.dart';
 
 // 顯示指定社區上架車位的頁面
 class parkingSpaceList extends StatefulWidget {

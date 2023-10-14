@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/fakeData.dart';
-import '../rent_screen_theme.dart';
+import 'package:parkpals/toRentView/models/responseModels/rent_object.dart';
+import '../../apis/to_rent_service.dart';
+import '../to_rent_screen_theme.dart';
 import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
-import 'can_rent_object.dart';
+import 'to_rent_object.dart';
 
 // main rent_home_screen.dart
 // 租借主頁面Body 使用Widge<ListView> 包裝所有功能Widget
@@ -18,13 +19,14 @@ class RentScreen extends StatefulWidget {
 }
 
 class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
-  String searchValue = ''; // 搜尋車位用
+  String searchValue = ''; // 搜尋車位文字區
   Animation<double>? topBarAnimation; // TopBar動畫
   List<Widget> listViews = <Widget>[]; // 所有Body UI的Widget
   final ScrollController scrollController =
       ScrollController(); // 監聽上面bar滑動的opacity
   double topBarOpacity = 0.0;
   int onDateSelected = 0; // 記錄選擇時間的index
+  List<ParkingSpace> listSpaces = <ParkingSpace>[]; // 可租借車位(by 日期)
 
   @override
   void initState() {
@@ -32,7 +34,8 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
         CurvedAnimation(
             parent: widget.mainScreenAnimationController!,
             curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-    addAllListData();
+    // 從API 取得指定日期車位清單
+    getParkingSpaceList();
 
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
@@ -56,6 +59,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
         }
       }
     });
+
     super.initState();
   }
 
@@ -92,18 +96,29 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   void searchParkingSpaces() {
     setState(() {
       // TODO: 處理weidget間的資料傳遞 模糊搜尋車位（名稱、樓層、車位編號、價格）
-
     });
   }
 
-  // 注入所有子widget UI
+  // 從API取得指定日期(選擇到的時間index)的可租借車位清單
+  Future<void> getParkingSpaceList() async {
+    try {
+      listSpaces = await getParkingSpaces();
+      addAllListData(); // 因為要等listSpaces處理完成，所以必須放在await後面
+    } catch (error) {
+      print('Error getParkingSpaces data: $error');
+    }
+  }
+
+  // 注入所有子widget UI 進入ListViews
   void addAllListData() {
-    int count = fakeParkingSpaces.length + 1; // 目前加入到這個頁面的UI Widget
+    print('addAllListData' + listSpaces.length.toString());
+    int count = listSpaces.length + 1; // 目前加入到這個頁面的UI Widget
     const int minCanRentObjectCount = 10; // 可租借的UI Widget 最小10
 
     // 時間選擇器
     listViews.add(
-      SelectDateListView(key: UniqueKey(),
+      SelectDateListView(
+        key: UniqueKey(),
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.mainScreenAnimationController!,
@@ -116,25 +131,29 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     );
 
     // 可租借車位列表
-    for (var park in fakeParkingSpaces) {
+    for (var park in listSpaces) {
       listViews.add(
-        CanRentObject(key: UniqueKey(),
+        CanRentObject(
+            key: UniqueKey(),
             // TODO: 要從API取得資訊
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
                     parent: widget.mainScreenAnimationController!,
-                    curve: Interval((1 / (count)) * (1 + fakeParkingSpaces.indexOf(park)), 1.0,
+                    curve: Interval(
+                        (1 / (count)) * (1 + listSpaces.indexOf(park)), 1.0,
                         curve: Curves.fastOutSlowIn))),
             mainScreenAnimationController:
                 widget.mainScreenAnimationController!,
-            objectCount: fakeParkingSpaces.length > minCanRentObjectCount ? fakeParkingSpaces.length : minCanRentObjectCount,
-            objectIndex: fakeParkingSpaces.indexOf(park),
+            objectCount: listSpaces.length > minCanRentObjectCount
+                ? listSpaces.length
+                : minCanRentObjectCount,
+            objectIndex: listSpaces.indexOf(park),
             parkingInfo: park),
       );
     }
   }
 
-  // ListView UI 所有物件
+  // 設置Body中所有ListView UI物件
   Widget getMainListViewUI() {
     return FutureBuilder<bool>(
       future: getData(), // 延遲顯示
@@ -155,7 +174,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
               widget.mainScreenAnimationController?.forward();
-              
+
               return listViews[index];
             },
           );
@@ -164,7 +183,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     );
   }
 
-  // 最上層固定的Title
+  // 設置最上層固定的Title
   Widget getAppBarUI() {
     return Column(
       children: <Widget>[
@@ -214,7 +233,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          20, 0, 18, 0),
+                                          20, 0, 13, 0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -227,7 +246,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                                   RentScreenTheme.fontName,
                                               fontWeight: FontWeight.w700,
                                               fontSize:
-                                                  18 + 6 - 6 * topBarOpacity,
+                                                  18 + 6 - 1 * topBarOpacity,
                                               letterSpacing: 1.2,
                                               color: RentScreenTheme.darkerText,
                                             ),
@@ -257,8 +276,8 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                       top: 8,
-                                      left: 8,
-                                      right: 8,
+                                      left: 3,
+                                      right: 3,
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -273,13 +292,13 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          '這邊改誰租借中',
+                                          '租借狀態 : 租借中',
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontFamily:
                                                 RentScreenTheme.fontName,
                                             fontWeight: FontWeight.normal,
-                                            fontSize: 18 - 6 * topBarOpacity,
+                                            fontSize: 18 - 1 * topBarOpacity,
                                             letterSpacing: -0.2,
                                             color: RentScreenTheme.darkerText,
                                           ),
@@ -337,7 +356,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                             Expanded(
                               child: TextField(
                                 style: TextStyle(
-                                    fontSize: 18 - 6 * topBarOpacity), // 调整文本大小
+                                    fontSize: 18 - 1 * topBarOpacity), // 调整文本大小
                                 decoration: const InputDecoration(
                                     hintText: '搜尋車位',
                                     border: UnderlineInputBorder(),

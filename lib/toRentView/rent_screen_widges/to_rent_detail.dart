@@ -1,10 +1,9 @@
 // 車位詳細資訊頁面
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/parkingSpace.dart';
+import '../models/responseModels/parking_space.dart';
+import '../models/responseModels/rent_object.dart';
 
 class canRentDetail extends StatelessWidget {
   final ParkingSpace parkingSpace;

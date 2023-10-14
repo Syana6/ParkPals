@@ -1,6 +1,6 @@
 import 'package:ej_selector/ej_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:parkpals/rentView/rent_screen_theme.dart';
+import 'package:parkpals/toRentView/to_rent_screen_theme.dart';
 
 // 選單按鈕 彈出MessageBox
 class SelectItemMsgBox extends StatelessWidget {

@@ -1,6 +1,6 @@
 // 編輯指定社區車位頁面
 import 'package:flutter/material.dart';
-import '../models/parkingSpace.dart';
+import '../toRentView/models/responseModels/rent_object.dart';
 
 class parkingSpaceEditPage extends StatefulWidget {
   final ParkingSpace space;
