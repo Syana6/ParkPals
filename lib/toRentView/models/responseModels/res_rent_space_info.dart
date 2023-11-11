@@ -3,52 +3,66 @@
 //     final ParkingSpace = ParkingSpaceFromJson(jsonString);
 
 import 'dart:convert';
-
 import '../../../enums/ParkingSpaceStatus.dart';
 
-List<ParkingSpace> ParkingSpaceFromJson(String str) => List<ParkingSpace>.from(json.decode(str).map((x) => ParkingSpace.fromJson(x)));
+List<resRentSpaceInfo> RentSpaceInfoFromJson(String str) => List<resRentSpaceInfo>.from(json.decode(str).map((x) => resRentSpaceInfo.fromJson(x)));
 
-String ParkingSpaceToJson(List<ParkingSpace> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String RentSpaceInfoToJson(List<resRentSpaceInfo> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 // 車位詳細資訊
-class ParkingSpace {
+class resRentSpaceInfo {
    String owner;   // 車位擁有者
    String floor;   // 車位樓層
    String space;   // 車位號碼
-   String price;      // 租借價格 pre hour
+   String price;   // 租借價格 pre hour
    String image;   // 車位照片
+   String? idleDate; // 有空位日期
+   String? idleStrTime; // 空位時間起點
+   String? idleEndTime;  // 空位時間終點
    ParkingSpaceStatus status;   // 車位狀態
 
-  ParkingSpace({
+  resRentSpaceInfo({
     required this.owner,
     required this.floor,
     required this.space,
     required this.price,
     required this.image,
+    this.idleDate,
+    this.idleStrTime,
+    this.idleEndTime,
     this.status = ParkingSpaceStatus.available,
   });
 
-    ParkingSpace copyWith({
+    resRentSpaceInfo copyWith({
         String? owner,
         String? floor,
         String? space,
         String? price,
         String? image,
+        String? idleDate,
+        String? idleStrTime,
+        String? idleEndTime,
     }) => 
-        ParkingSpace(
+        resRentSpaceInfo(
             owner: owner ?? this.owner,
             floor: floor ?? this.floor,
             space: space ?? this.space,
             price: price ?? this.price,
             image: image ?? this.image,
+            idleDate: idleDate ?? this.idleDate,
+            idleStrTime: idleStrTime ?? this.idleStrTime,
+            idleEndTime: idleEndTime ?? this.idleEndTime,
         );
 
-    factory ParkingSpace.fromJson(Map<String, dynamic> json) => ParkingSpace(
+    factory resRentSpaceInfo.fromJson(Map<String, dynamic> json) => resRentSpaceInfo(
         owner: json["owner"],
         floor: json["floor"],
         space: json["space"],
         price: json["price"],
         image: json["image"],
+        idleDate: json["idleDate"],
+        idleStrTime: json["idleStrTime"],
+        idleEndTime: json["idleEndTime"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -57,5 +71,8 @@ class ParkingSpace {
         "space": space,
         "price": price,
         "image": image,
+        "idleDate": idleDate,
+        "idleStrTime": idleStrTime,
+        "idleEndTime": idleEndTime,
     };
 }

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:parkpals/myRentView/parkingSpaceEditPage.dart';
-import '../toRentView/models/fakeData.dart';
-import '../toRentView/models/responseModels/rent_object.dart';
+import 'package:parkpals/myParkingView/parkingSpaceEditPage.dart';
+import '../apis/fakeData.dart';
+import 'models/responseModels/responseModels/res_parking_space_info.dart';
 
-// 顯示指定社區上架車位的頁面
+// 出借：顯示指定社區上架車位的頁面
 class parkingSpaceList extends StatefulWidget {
   final String community;
 
@@ -16,7 +16,7 @@ class parkingSpaceList extends StatefulWidget {
 }
 
 class _SpaceListPageState extends State<parkingSpaceList> {
-  List<ParkingSpace> spaces = fakeParkingSpaces;
+  List<resMyRentSpaceInfo> spaces = fakeParkingSpaces;
 
   @override
   Widget build(BuildContext context) {

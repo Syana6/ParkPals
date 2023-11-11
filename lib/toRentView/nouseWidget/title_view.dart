@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:parkpals/toRentView/to_rent_screen_theme.dart';
 
-// UI TitleView
+// UI TitleView 
+// no use
 class TitleView extends StatelessWidget {
   final String titleTxt;
   final String subTxt;

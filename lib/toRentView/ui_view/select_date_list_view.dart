@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../to_rent_screen_theme.dart';
 
-// 時間卡片選擇器
+// 日期卡片選擇器
 class SelectDateListView extends StatefulWidget {
   const SelectDateListView(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation, required this.getDateIndex, required this.setDateIndex})
@@ -9,17 +9,18 @@ class SelectDateListView extends StatefulWidget {
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
-  final int Function() getDateIndex; // 從parent取得選擇的日期index
-  final Function(int) setDateIndex; // 紀錄選擇的日期index給parent
+  final int Function() getDateIndex; // 從parent取得選擇的日期index 重新build時會自動設定該日期物件被選擇
+  final Function(WeekDay) setDateIndex; // 紀錄選擇的日期index給parent
 
   @override
   _SelectDateListState createState() => _SelectDateListState();
 }
 
+// 建構日期卡片List Widgets
 class _SelectDateListState extends State<SelectDateListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-  List<WeekDay>? WeekDaylist;
+  List<WeekDay>? WeekDaylist; // 日期卡片
 
   @override
   void initState() {
@@ -36,12 +37,12 @@ class _SelectDateListState extends State<SelectDateListView>
     return true;
   }
 
-  // 處理按下時間卡片selected變換
+  // 處理按下日期卡片selected變換
   void weekDaySelected(WeekDay wd) {
     WeekDaylist?.forEach((weekday) {
       if (wd == weekday) {
         weekday.selected = true;
-        widget.setDateIndex!(wd.weekIndex!);
+        widget.setDateIndex(wd);
       } else {
         weekday.selected = false;
       }
@@ -50,14 +51,14 @@ class _SelectDateListState extends State<SelectDateListView>
     });
   }
 
-  // 產稱時間8張卡片結構放入WeekDaylist
+  // 產生8張日期卡片放入WeekDaylist
   void generateDateList() {
     final today = DateTime.now();
     WeekDaylist = List.generate(8, (index) {
       final date = today.add(Duration(days: index));
       final weekdayInfo = mapWeekday(date);
 
-      return WeekDay(
+      WeekDay wd = WeekDay(
         dateTime: date,
         week: weekdayInfo.week,
         date: date.day,
@@ -66,6 +67,12 @@ class _SelectDateListState extends State<SelectDateListView>
         weekIndex : index,
         selected: widget.getDateIndex() == index, // 取得存在放parent的index
       );
+
+      if(wd.selected) {
+        widget.setDateIndex(wd);
+      }
+
+      return wd;
     });
   }
 
@@ -84,32 +91,35 @@ class _SelectDateListState extends State<SelectDateListView>
           opacity: widget.mainScreenAnimation!,
           child: Transform.translate(
             offset: Offset(0.0, 30 * (1.0 - widget.mainScreenAnimation!.value)),
-            child: SizedBox(
-              height: 120, // 外框的高度
-              width: double.infinity,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: WeekDaylist?.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  final int count =
-                      WeekDaylist!.length > 10 ? 10 : WeekDaylist!.length;
-                  final Animation<double> animation =
-                      Tween<double>(begin: 0.0, end: 1.0).animate(
-                          CurvedAnimation(
-                              parent: animationController!,
-                              curve: Interval((1 / count) * index, 1.0,
-                                  curve: Curves.fastOutSlowIn)));
-                  animationController?.forward();
+            child: Container(
+              // color: Colors.black54,
+              child:SizedBox(
+                height: 100, // 日期卡片外框的高度
+                width: double.infinity,
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(
+                      top: 0, bottom: 0, right: 16, left: 16),
+                  itemCount: WeekDaylist?.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    final int count =
+                        WeekDaylist!.length > 10 ? 10 : WeekDaylist!.length;
+                    final Animation<double> animation =
+                        Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                                parent: animationController!,
+                                curve: Interval((1 / count) * index, 1.0,
+                                    curve: Curves.fastOutSlowIn)));
+                    animationController?.forward();
 
-                  return DataView(
-                    weekday: WeekDaylist![index],
-                    animation: animation,
-                    animationController: animationController!,
-                    onDateTab: weekDaySelected,
-                  );
-                },
+                    return DateView(
+                      weekday: WeekDaylist![index],
+                      animation: animation,
+                      animationController: animationController!,
+                      onDateTab: weekDaySelected,
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -119,9 +129,9 @@ class _SelectDateListState extends State<SelectDateListView>
   }
 }
 
-// 時間卡片Widget
-class DataView extends StatelessWidget {
-  const DataView({
+// 建構日期卡片Widget
+class DateView extends StatelessWidget {
+  const DateView({
     Key? key,
     this.weekday,
     this.animationController,
@@ -163,8 +173,8 @@ class DataView extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(
-          // 外框的邊界間距
-          top: 22,
+          // 日期卡片外框的邊界間距
+          top: 3,
           left: 6,
           right: 6,
           bottom: 3),
@@ -241,7 +251,7 @@ class DataView extends StatelessWidget {
   }
 }
 
-// 周轉英文簡稱 & 六日顏色(SelectDateListView用)
+// 週轉英文簡稱 & 六日顏色
 WeekDay mapWeekday(DateTime date) {
   final defaultColor = WeekDay(
     week: '未知',
@@ -272,7 +282,7 @@ WeekDay mapWeekday(DateTime date) {
   }
 }
 
-// 時間卡片
+// 日期卡片
 class WeekDay {
   DateTime? dateTime;
   String week;
@@ -280,7 +290,7 @@ class WeekDay {
   String startColor;
   String endColor;
   bool selected;
-  int? weekIndex;
+  int weekIndex;
 
   WeekDay({
     this.dateTime,
@@ -289,6 +299,6 @@ class WeekDay {
     this.startColor = '',
     this.endColor = '',
     this.selected = false, 
-    this.weekIndex,
+    this.weekIndex = 0,
   });
 }

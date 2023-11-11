@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/responseModels/rent_object.dart';
+import '../models/responseModels/res_rent_space_info.dart';
 import 'to_rent_detail.dart';
 
 // main rent_screen.dart
-// 顯示可租借車位的列表
-class CanRentObject extends StatefulWidget {
-  const CanRentObject(
+// 租借：顯示可租借車位的列表
+class toRentInfo extends StatefulWidget {
+  const toRentInfo(
       {Key? key,
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
@@ -19,13 +19,13 @@ class CanRentObject extends StatefulWidget {
 
   final int objectCount; // 可停物件總數
   final int objectIndex; // 可停物件Index
-  final ParkingSpace parkingInfo; // 可停物件資訊
+  final resRentSpaceInfo parkingInfo; // 可停物件資訊
 
   @override
-  _CanRentObjectState createState() => _CanRentObjectState();
+  _toRentInfoState createState() => _toRentInfoState();
 }
 
-class _CanRentObjectState extends State<CanRentObject>
+class _toRentInfoState extends State<toRentInfo>
     with TickerProviderStateMixin {
 
   AnimationController? animationController;
@@ -80,7 +80,7 @@ class _CanRentObjectState extends State<CanRentObject>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => canRentDetail(
+                          builder: (context) => toRentDetail(
                             parkingSpace: widget.parkingInfo,
                           ),
                         ),
@@ -106,7 +106,7 @@ class ParkingSpaceInfo extends StatelessWidget {
       this.animation})
       : super(key: key);
 
-  final ParkingSpace? parkInfo;
+  final resRentSpaceInfo? parkInfo;
   final VoidCallback? callBack;
   final AnimationController? animationController;
   final Animation<double>? animation;

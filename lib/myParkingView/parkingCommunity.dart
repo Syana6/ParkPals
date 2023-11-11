@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:parkpals/myRentView/parkingSpaceList.dart';
+import 'package:parkpals/myParkingView/parkingSpaceList.dart';
 
-import '../toRentView/models/fakeData.dart';
-import '../toRentView/models/responseModels/parking_space.dart';
+import '../apis/fakeData.dart';
+import 'models/responseModels/responseModels/res_parking_space_info.dart';
 
-// 顯示上架車位社區的頁面
+// 出借：顯示上架車位社區的頁面
 // todo： 尚未登錄過車位的使用者，要先登錄車位才能看到這個頁面
 
 class parkingCommunity extends StatefulWidget {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:parkpals/toRentView/models/responseModels/rent_object.dart';
+import 'package:parkpals/toRentView/models/responseModels/res_rent_space_info.dart';
 import '../../apis/to_rent_service.dart';
 import '../to_rent_screen_theme.dart';
 import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
-import 'to_rent_object.dart';
+import 'to_rent_info.dart';
 
-// main rent_home_screen.dart
+// 租借：main rent_home_screen.dart
 // 租借主頁面Body 使用Widge<ListView> 包裝所有功能Widget
-// 搜尋功能也放在這邊傳入CanRent
+// 搜尋功能也放在這邊傳入to_rent_detail
 class RentScreen extends StatefulWidget {
   const RentScreen({Key? key, this.mainScreenAnimationController})
       : super(key: key);
@@ -25,8 +25,9 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   final ScrollController scrollController =
       ScrollController(); // 監聽上面bar滑動的opacity
   double topBarOpacity = 0.0;
-  int onDateSelected = 0; // 記錄選擇時間的index
-  List<ParkingSpace> listSpaces = <ParkingSpace>[]; // 可租借車位(by 日期)
+  int onSelectedDateIndex = 0; // 記錄選擇的日期index
+  WeekDay? onSelectedDateObj; // 記錄選擇的日期物件
+  List<resRentSpaceInfo> listSpaces = <resRentSpaceInfo>[]; // 可租借車位(by 日期)
 
   @override
   void initState() {
@@ -65,12 +66,20 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 提供Child Callback selected紀錄
   int getWeekDaySelected() {
-    return this.onDateSelected;
+    return onSelectedDateObj == null ? onSelectedDateIndex : onSelectedDateObj!.weekIndex;
   }
 
-  // 提供Child Callback處理按下時間卡片selected紀錄
-  void setWeekDaySelected(int index) {
-    this.onDateSelected = index;
+  // 提供Child Callback處理按下時間卡片selected的WeekDay物件
+  void setWeekDaySelected(WeekDay wd) {
+
+    // 點到同一個日期不處理
+    if(wd.dateTime?.month == onSelectedDateObj?.dateTime?.month
+    && wd.dateTime?.day == onSelectedDateObj?.dateTime?.day){
+      return;
+    }
+    onSelectedDateIndex = wd.weekIndex;
+    onSelectedDateObj = wd;
+    getParkingSpaceList(); // 每次按下時間卡片 更新畫面車位清單
   }
 
   Widget build(BuildContext context) {
@@ -102,8 +111,11 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   // 從API取得指定日期(選擇到的時間index)的可租借車位清單
   Future<void> getParkingSpaceList() async {
     try {
-      listSpaces = await getParkingSpaces();
+      listSpaces = await getParkingSpaces(onSelectedDateObj == null ? DateTime.now() : onSelectedDateObj!.dateTime);
       addAllListData(); // 因為要等listSpaces處理完成，所以必須放在await後面
+      setState(() {
+        
+      });
     } catch (error) {
       print('Error getParkingSpaces data: $error');
     }
@@ -111,31 +123,16 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 注入所有子widget UI 進入ListViews
   void addAllListData() {
+    listViews.clear();
     print('addAllListData' + listSpaces.length.toString());
     int count = listSpaces.length + 1; // 目前加入到這個頁面的UI Widget
-    const int minCanRentObjectCount = 10; // 可租借的UI Widget 最小10
+    const int minToRentObjectCount = 10; // 可租借的UI Widget 最小10
 
-    // 時間選擇器
-    listViews.add(
-      SelectDateListView(
-        key: UniqueKey(),
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.mainScreenAnimationController!,
-                curve: Interval((1 / (count)) * 1, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.mainScreenAnimationController!,
-        getDateIndex: getWeekDaySelected,
-        setDateIndex: setWeekDaySelected,
-      ),
-    );
-
-    // 可租借車位列表
+    // 注入可租借車位列表
     for (var park in listSpaces) {
       listViews.add(
-        CanRentObject(
+        toRentInfo(
             key: UniqueKey(),
-            // TODO: 要從API取得資訊
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
                     parent: widget.mainScreenAnimationController!,
@@ -144,9 +141,9 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                         curve: Curves.fastOutSlowIn))),
             mainScreenAnimationController:
                 widget.mainScreenAnimationController!,
-            objectCount: listSpaces.length > minCanRentObjectCount
+            objectCount: listSpaces.length > minToRentObjectCount
                 ? listSpaces.length
-                : minCanRentObjectCount,
+                : minToRentObjectCount,
             objectIndex: listSpaces.indexOf(park),
             parkingInfo: park),
       );
@@ -166,7 +163,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
             padding: EdgeInsets.only(
               // 從 AppBar 的下方開始顯示，避免被 AppBar 覆蓋
               top: AppBar().preferredSize.height +
-                  45 +
+                  165 +
                   MediaQuery.of(context).padding.top, // 狀態欄的高度
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
@@ -180,6 +177,23 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
           );
         }
       },
+    );
+  }
+
+  Widget getAppBarDateList() {
+    // 注入租借日期選擇器
+    return(
+      SelectDateListView(這裡改stateless widget
+        key: UniqueKey(),
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.mainScreenAnimationController!,
+                curve: const Interval((1 / (2)) * 1, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.mainScreenAnimationController!,
+        getDateIndex: getWeekDaySelected,
+        setDateIndex: setWeekDaySelected,
+      )
     );
   }
 
@@ -330,7 +344,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                       // 第二行
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 22, right: 16, bottom: 10),
+                            left: 22, right: 16, bottom: 0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -371,7 +385,16 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      Padding(
+                          // 處理topBarOpacity變化時的top與bottom
+                          padding: EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 16 - 8.0 * topBarOpacity),
+                          child:getAppBarDateList(),
+                          ),
                     ],
                   ),
                 ),

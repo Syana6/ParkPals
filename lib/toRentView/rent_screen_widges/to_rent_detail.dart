@@ -1,14 +1,12 @@
-// 車位詳細資訊頁面
+// 租借：車位詳細資訊頁面
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../models/responseModels/res_rent_space_info.dart';
 
-import '../models/responseModels/parking_space.dart';
-import '../models/responseModels/rent_object.dart';
+class toRentDetail extends StatelessWidget {
+  final resRentSpaceInfo parkingSpace;
 
-class canRentDetail extends StatelessWidget {
-  final ParkingSpace parkingSpace;
-
-  const canRentDetail({Key? key, required this.parkingSpace}) : super(key: key);
+  const toRentDetail({Key? key, required this.parkingSpace}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
