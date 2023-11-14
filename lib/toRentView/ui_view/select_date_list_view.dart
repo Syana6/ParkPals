@@ -46,9 +46,9 @@ class _SelectDateListState extends State<SelectDateListView>
       } else {
         weekday.selected = false;
       }
+    });
       setState(() {
       });
-    });
   }
 
   // 產生8張日期卡片放入WeekDaylist

@@ -60,8 +60,6 @@ class OmniDatetimePicker extends StatelessWidget {
                       }
                     },
                   );
-
-                  print("dateTime: $dateTime");
                 },
                 child: const Text("Show DateTime Picker"),
               ),
@@ -114,9 +112,6 @@ class OmniDatetimePicker extends StatelessWidget {
                       }
                     },
                   );
-
-                  print("Start dateTime: ${dateTimeList?[0]}");
-                  print("End dateTime: ${dateTimeList?[1]}");
                 },
                 child: const Text("Show DateTime Range Picker"),
               ),

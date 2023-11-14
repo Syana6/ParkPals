@@ -28,6 +28,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   int onSelectedDateIndex = 0; // 記錄選擇的日期index
   WeekDay? onSelectedDateObj; // 記錄選擇的日期物件
   List<resRentSpaceInfo> listSpaces = <resRentSpaceInfo>[]; // 可租借車位(by 日期)
+  late Widget AppBarDateList;
 
   @override
   void initState() {
@@ -35,6 +36,9 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
         CurvedAnimation(
             parent: widget.mainScreenAnimationController!,
             curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+
+    // 初始化日期選擇器
+    AppBarDateList = getAppBarDateList();
     // 從API 取得指定日期車位清單
     getParkingSpaceList();
 
@@ -71,7 +75,6 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 提供Child Callback處理按下時間卡片selected的WeekDay物件
   void setWeekDaySelected(WeekDay wd) {
-
     // 點到同一個日期不處理
     if(wd.dateTime?.month == onSelectedDateObj?.dateTime?.month
     && wd.dateTime?.day == onSelectedDateObj?.dateTime?.day){
@@ -79,6 +82,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     }
     onSelectedDateIndex = wd.weekIndex;
     onSelectedDateObj = wd;
+    print('setWeekDaySelected');
     getParkingSpaceList(); // 每次按下時間卡片 更新畫面車位清單
   }
 
@@ -111,6 +115,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   // 從API取得指定日期(選擇到的時間index)的可租借車位清單
   Future<void> getParkingSpaceList() async {
     try {
+      print('getParkingSpaceList');
       listSpaces = await getParkingSpaces(onSelectedDateObj == null ? DateTime.now() : onSelectedDateObj!.dateTime);
       addAllListData(); // 因為要等listSpaces處理完成，所以必須放在await後面
       setState(() {
@@ -183,7 +188,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   Widget getAppBarDateList() {
     // 注入租借日期選擇器
     return(
-      SelectDateListView(這裡改stateless widget
+      SelectDateListView(
         key: UniqueKey(),
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
@@ -393,7 +398,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                               right: 0,
                               top: 0,
                               bottom: 16 - 8.0 * topBarOpacity),
-                          child:getAppBarDateList(),
+                          child:AppBarDateList,
                           ),
                     ],
                   ),
