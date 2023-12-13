@@ -348,6 +348,356 @@ var fakeRentSpacesJson1 = '''[
       "idleDate":"2024-12-31",
       "idleStrTime":"15:00",
       "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 100F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 200F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
+    },
+    {
+      "owner": "266-8 0F",
+      "floor": "B3",
+      "space": "22",
+      "price": "150",
+      "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
+      "idleDate":"2024-12-31",
+      "idleStrTime":"15:00",
+      "idleEndTime":"22:00"
     }
   ]
 ''';

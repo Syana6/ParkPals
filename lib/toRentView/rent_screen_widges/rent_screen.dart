@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:parkpals/toRentView/models/responseModels/res_rent_space_info.dart';
 import '../../apis/to_rent_service.dart';
 import '../to_rent_screen_theme.dart';
+import '../ui_view/notificate_bell.dart';
 import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
+import 'notify_screen.dart';
 import 'to_rent_info.dart';
 
 // 租借：main rent_home_screen.dart
@@ -70,14 +72,16 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   // 提供Child Callback selected紀錄
   int getWeekDaySelected() {
-    return onSelectedDateObj == null ? onSelectedDateIndex : onSelectedDateObj!.weekIndex;
+    return onSelectedDateObj == null
+        ? onSelectedDateIndex
+        : onSelectedDateObj!.weekIndex;
   }
 
   // 提供Child Callback處理按下時間卡片selected的WeekDay物件
   void setWeekDaySelected(WeekDay wd) {
     // 點到同一個日期不處理
-    if(wd.dateTime?.month == onSelectedDateObj?.dateTime?.month
-    && wd.dateTime?.day == onSelectedDateObj?.dateTime?.day){
+    if (wd.dateTime?.month == onSelectedDateObj?.dateTime?.month &&
+        wd.dateTime?.day == onSelectedDateObj?.dateTime?.day) {
       return;
     }
     onSelectedDateIndex = wd.weekIndex;
@@ -94,7 +98,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
         body: Stack(
           children: <Widget>[
             getMainListViewUI(), // 這裡是 ListView Body 的 UI
-            getAppBarUI(), // 這裡是 AppBar 最上層固定 的 UI
+            getAppTopBarUI(), // 這裡是 AppBar 最上層固定 的 UI
             // 避免被下面狀態欄覆蓋
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
@@ -116,11 +120,11 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
   Future<void> getParkingSpaceList() async {
     try {
       print('getParkingSpaceList');
-      listSpaces = await getParkingSpaces(onSelectedDateObj == null ? DateTime.now() : onSelectedDateObj!.dateTime);
+      listSpaces = await getParkingSpaces(onSelectedDateObj == null
+          ? DateTime.now()
+          : onSelectedDateObj!.dateTime);
       addAllListData(); // 因為要等listSpaces處理完成，所以必須放在await後面
-      setState(() {
-        
-      });
+      setState(() {});
     } catch (error) {
       print('Error getParkingSpaces data: $error');
     }
@@ -142,7 +146,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                 CurvedAnimation(
                     parent: widget.mainScreenAnimationController!,
                     curve: Interval(
-                        (1 / (count)) * (1 + listSpaces.indexOf(park)), 1.0,
+                        (1 / (count + 2)) * (1 + listSpaces.indexOf(park)), 1.0,
                         curve: Curves.fastOutSlowIn))),
             mainScreenAnimationController:
                 widget.mainScreenAnimationController!,
@@ -187,23 +191,20 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
 
   Widget getAppBarDateList() {
     // 注入租借日期選擇器
-    return(
-      SelectDateListView(
-        key: UniqueKey(),
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.mainScreenAnimationController!,
-                curve: const Interval((1 / (2)) * 1, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.mainScreenAnimationController!,
-        getDateIndex: getWeekDaySelected,
-        setDateIndex: setWeekDaySelected,
-      )
-    );
+    return (SelectDateListView(
+      key: UniqueKey(),
+      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: widget.mainScreenAnimationController!,
+              curve: const Interval(0, 1, curve: Curves.fastOutSlowIn))),
+      mainScreenAnimationController: widget.mainScreenAnimationController!,
+      getDateIndex: getWeekDaySelected,
+      setDateIndex: setWeekDaySelected,
+    ));
   }
 
   // 設置最上層固定的Title
-  Widget getAppBarUI() {
+  Widget getAppTopBarUI() {
     return Column(
       children: <Widget>[
         AnimatedBuilder(
@@ -224,7 +225,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: RentScreenTheme.grey
+                          color: RentScreenTheme.nearlyWhite
                               .withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
@@ -258,7 +259,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            '我想借車位',
+                                            'Hello _______' /* TODO:從API取得暱稱 */,
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontFamily:
@@ -274,71 +275,40 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  // 左邊箭頭
+                                  // 鈴鐺通知
                                   SizedBox(
-                                    height: 38,
-                                    width: 38,
+                                    height: 30,
+                                    width: 42,
                                     child: InkWell(
                                       highlightColor: Colors.transparent,
                                       borderRadius: const BorderRadius.all(
-                                          Radius.circular(32.0)),
-                                      onTap: () {},
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.keyboard_arrow_left,
-                                          color: RentScreenTheme.grey,
-                                        ),
-                                      ),
+                                          Radius.circular(36.0)),
+                                      onTap: () {
+                                        // 切換到通知畫面
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  NotifyScreen()),
+                                        );
+                                      },
+                                      child: NotificateBell(),
                                     ),
                                   ),
-                                  // 15 May
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 8,
-                                      left: 3,
-                                      right: 3,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        const Padding(
-                                          padding: EdgeInsets.only(right: 8),
-                                          child: Icon(
-                                            Icons.car_rental_outlined,
-                                            color: RentScreenTheme.grey,
-                                            size: 18,
-                                          ),
-                                        ),
-                                        Text(
-                                          '租借狀態 : 租借中',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                RentScreenTheme.fontName,
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 18 - 1 * topBarOpacity,
-                                            letterSpacing: -0.2,
-                                            color: RentScreenTheme.darkerText,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // 右邊箭頭
+                                  // 設定
                                   SizedBox(
-                                    height: 38,
-                                    width: 38,
+                                    height: 30,
+                                    width: 42,
                                     child: InkWell(
                                       highlightColor: Colors.transparent,
                                       borderRadius: const BorderRadius.all(
-                                          Radius.circular(32.0)),
+                                          Radius.circular(36.0)),
                                       onTap: () {},
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.keyboard_arrow_right,
-                                          color: RentScreenTheme.grey,
-                                        ),
+                                      child: const Icon(
+                                        Icons.settings,
+                                        color:
+                                            Color.fromARGB(255, 32, 118, 175),
+                                        size: 28,
                                       ),
                                     ),
                                   ),
@@ -392,14 +362,14 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       Padding(
-                          // 處理topBarOpacity變化時的top與bottom
-                          padding: EdgeInsets.only(
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 16 - 8.0 * topBarOpacity),
-                          child:AppBarDateList,
-                          ),
+                        // 處理topBarOpacity變化時的top與bottom
+                        padding: EdgeInsets.only(
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 16 - 8.0 * topBarOpacity),
+                        child: AppBarDateList,
+                      ),
                     ],
                   ),
                 ),

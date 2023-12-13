@@ -3,7 +3,7 @@ import '../models/responseModels/res_rent_space_info.dart';
 import 'to_rent_detail.dart';
 
 // main rent_screen.dart
-// 租借：顯示可租借車位的列表
+// 租借：顯示可租借車位卡片(單張)
 class toRentInfo extends StatefulWidget {
   const toRentInfo(
       {Key? key,
