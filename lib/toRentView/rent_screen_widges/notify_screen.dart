@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
+import '../../enums/ParkingSpaceStatus.dart';
 import 'notify_screen_detail.dart';
 
 // 通知：顯示通知清單，清單項目以出粗車位為項目
-class ChatListItem {
+class NotifyListItem {
+  String rentSpace;
   String avatarUrl;
   String title;
   String latestMessage;
-  int unreadCount;
-  String time;
+  int unreadCount; // 訊息數量
+  ParkingSpaceStatus status;
+  String createTime;
 
-  ChatListItem({
+  NotifyListItem({
+    required this.rentSpace,
     required this.avatarUrl,
     required this.title,
     required this.latestMessage,
     required this.unreadCount,
-    required this.time,
+    required this.status,
+    required this.createTime,
   });
 }
 
 class NotifyScreen extends StatelessWidget {
-  final List<ChatListItem> chatList = [
-    ChatListItem(
+  final List<NotifyListItem> notifyList = [
+    NotifyListItem(
+      rentSpace:'B1-22',
       avatarUrl: 'https://example.com/avatar1.png',
       title: '1 號車位',
       latestMessage: 'Hello there!',
+      status:ParkingSpaceStatus.rented,
       unreadCount: 13,
-      time: '10:30 AM',
+      createTime: '10:30 AM',
     ),
-    ChatListItem(
+    NotifyListItem(
+      rentSpace:'B4-373',
       avatarUrl: 'https://example.com/avatar2.png',
       title: '2 號車位',
       latestMessage: 'How are you?',
+      status: ParkingSpaceStatus.available,
       unreadCount: 0,
-      time: '10:45 AM',
+      createTime: '10:45 AM',
     ),
     // Add more chat items as needed
   ];
@@ -44,52 +53,75 @@ class NotifyScreen extends StatelessWidget {
         title: const Text('通知'),
       ),
       body: ListView.builder(
-        itemCount: chatList.length,
+        itemCount: notifyList.length,
         itemBuilder: (context, index) {
-          return ChatListItemWidget(chatItem: chatList[index]);
+          return NotifyListItemWidget(notify: notifyList[index]);
         },
       ),
     );
   }
 }
 
-class ChatListItemWidget extends StatelessWidget {
-  final ChatListItem chatItem;
+class NotifyListItemWidget extends StatelessWidget {
+  final NotifyListItem notify;
 
-  ChatListItemWidget({required this.chatItem});
+  NotifyListItemWidget({required this.notify});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(chatItem.avatarUrl),
+        backgroundImage: NetworkImage(notify.avatarUrl),
       ),
       title: Row(
         children: [
           Expanded(
-            child: Text(chatItem.title,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.3, // 設置文本之間的間距
-                )),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  WidgetSpan(
+                    child: CustomPaint(
+                      painter: DotPainter(
+                        color: notify.status == ParkingSpaceStatus.rented ? 
+                            Colors.red : 
+                              (notify.status == ParkingSpaceStatus.available ? Colors.green : Colors.black54),
+                        radius: 9.0,
+                      ),
+                    ),
+                  ),
+                  TextSpan(
+                    text: notify.title,
+                    style: const TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.3, // 設置文本之間的間距
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          chatItem.unreadCount > 0 // 如果有訊息的話顯示紅色數字
+          notify.unreadCount > 0
               ? Container(
                   margin: const EdgeInsets.only(left: 8.0),
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 46, 188, 48),
-                    borderRadius: BorderRadius.circular(20),
+                  child: CustomPaint(
+                    painter: DotPainter(
+                      color: Color.fromARGB(255, 46, 188, 48),
+                      radius: 10.0,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${notify.unreadCount}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1.3,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Text('${chatItem.unreadCount}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 1.3, // 設置文本之間的間距
-                        fontSize: 12.0, // 設置字體大小
-                      )),
                 )
               : const SizedBox(width: 40),
         ],
@@ -97,33 +129,53 @@ class ChatListItemWidget extends StatelessWidget {
       subtitle: Expanded(
         child: Row(children: [
           Expanded(
-            child: Text(chatItem.latestMessage,
-                style: const TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 0.5, // 設置文本之間的間距
-                )),
+            child: Text(
+              notify.latestMessage,
+              style: const TextStyle(
+                color: Colors.black38,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 0.5,
+              ),
+            ),
           ),
           Text(
-            chatItem.time,
+            notify.createTime,
             style: const TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.w300,
-              letterSpacing: 0.5, // 設置文本之間的間距
-              fontSize: 11.0, // 設置字體大小
+              letterSpacing: 0.5,
+              fontSize: 11.0,
             ),
           ),
         ]),
       ),
       onTap: () {
-        // 在點擊時導航到通知明細
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => NotifyScreenDetail(),
+            builder: (context) => NotifyScreenDetail(rentSpace: notify.rentSpace, status: notify.status),
           ),
         );
       },
     );
+  }
+}
+
+// 繪製紅色小點
+class DotPainter extends CustomPainter {
+  final Color color;
+  final double radius;
+
+  DotPainter({required this.color, required this.radius});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = color;
+    canvas.drawCircle(Offset(size.width / 2, size.height / 2), radius, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
