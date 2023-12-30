@@ -26,22 +26,31 @@ class NotifyListItem {
 class NotifyScreen extends StatelessWidget {
   final List<NotifyListItem> notifyList = [
     NotifyListItem(
-      rentSpace:'B1-22',
+      rentSpace: 'B1-22',
       avatarUrl: 'https://example.com/avatar1.png',
       title: '1 號車位',
       latestMessage: 'Hello there!',
-      status:ParkingSpaceStatus.rented,
+      status: ParkingSpaceStatus.rented,
       unreadCount: 13,
       createTime: '10:30 AM',
     ),
     NotifyListItem(
-      rentSpace:'B4-373',
+      rentSpace: 'B4-373',
       avatarUrl: 'https://example.com/avatar2.png',
       title: '2 號車位',
       latestMessage: 'How are you?',
       status: ParkingSpaceStatus.available,
       unreadCount: 0,
       createTime: '10:45 AM',
+    ),
+    NotifyListItem(
+      rentSpace: 'B2-200',
+      avatarUrl: 'https://example.com/avatar2.png',
+      title: '向＿＿租借的車位',
+      latestMessage: '',
+      status: ParkingSpaceStatus.available,
+      unreadCount: 2,
+      createTime: '10:00 AM',
     ),
     // Add more chat items as needed
   ];
@@ -62,6 +71,7 @@ class NotifyScreen extends StatelessWidget {
   }
 }
 
+// 以車位為通知項目顯示租借訊息
 class NotifyListItemWidget extends StatelessWidget {
   final NotifyListItem notify;
 
@@ -79,26 +89,12 @@ class NotifyListItemWidget extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                children: [
-                  WidgetSpan(
-                    child: CustomPaint(
-                      painter: DotPainter(
-                        color: notify.status == ParkingSpaceStatus.rented ? 
-                            Colors.red : 
-                              (notify.status == ParkingSpaceStatus.available ? Colors.green : Colors.black54),
-                        radius: 9.0,
-                      ),
-                    ),
-                  ),
-                  TextSpan(
-                    text: notify.title,
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.3, // 設置文本之間的間距
-                    ),
-                  ),
-                ],
+                text: notify.title,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.3, // 設置文本之間的間距
+                ),
               ),
             ),
           ),
@@ -126,34 +122,33 @@ class NotifyListItemWidget extends StatelessWidget {
               : const SizedBox(width: 40),
         ],
       ),
-      subtitle: Expanded(
-        child: Row(children: [
-          Expanded(
-            child: Text(
-              notify.latestMessage,
-              style: const TextStyle(
-                color: Colors.black38,
-                fontWeight: FontWeight.w300,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ),
-          Text(
-            notify.createTime,
+      subtitle: Row(children: [
+        Expanded(
+          child: Text(
+            notify.latestMessage,
             style: const TextStyle(
-              color: Colors.grey,
+              color: Colors.black38,
               fontWeight: FontWeight.w300,
               letterSpacing: 0.5,
-              fontSize: 11.0,
             ),
           ),
-        ]),
-      ),
+        ),
+        Text(
+          notify.createTime,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w300,
+            letterSpacing: 0.5,
+            fontSize: 11.0,
+          ),
+        ),
+      ]),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => NotifyScreenDetail(rentSpace: notify.rentSpace, status: notify.status),
+            builder: (context) => NotifyScreenDetail(
+                rentSpace: notify.rentSpace, status: notify.status),
           ),
         );
       },

@@ -11,6 +11,8 @@ String RentSpaceInfoToJson(List<resRentSpaceInfo> data) => json.encode(List<dyna
 
 // 車位詳細資訊
 class resRentSpaceInfo {
+   String communityID;   // 社區編號
+   String communityName;   // 社區名稱
    String owner;   // 車位擁有者
    String floor;   // 車位樓層
    String space;   // 車位號碼
@@ -22,6 +24,8 @@ class resRentSpaceInfo {
    ParkingSpaceStatus status;   // 車位狀態
 
   resRentSpaceInfo({
+    required this.communityID,
+    required this.communityName,
     required this.owner,
     required this.floor,
     required this.space,
@@ -34,6 +38,8 @@ class resRentSpaceInfo {
   });
 
     resRentSpaceInfo copyWith({
+        String? communityID,
+        String? communityName,
         String? owner,
         String? floor,
         String? space,
@@ -44,6 +50,8 @@ class resRentSpaceInfo {
         String? idleEndTime,
     }) => 
         resRentSpaceInfo(
+            communityID: communityID ?? this.communityID,
+            communityName: communityName ?? this.communityName,
             owner: owner ?? this.owner,
             floor: floor ?? this.floor,
             space: space ?? this.space,
@@ -55,6 +63,8 @@ class resRentSpaceInfo {
         );
 
     factory resRentSpaceInfo.fromJson(Map<String, dynamic> json) => resRentSpaceInfo(
+        communityID: json["communityID"],
+        communityName: json["communityName"],
         owner: json["owner"],
         floor: json["floor"],
         space: json["space"],
@@ -66,6 +76,8 @@ class resRentSpaceInfo {
     );
 
     Map<String, dynamic> toJson() => {
+        "communityID": communityID,
+        "communityName": communityName,
         "owner": owner,
         "floor": floor,
         "space": space,

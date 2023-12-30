@@ -137,6 +137,8 @@ List<resMyRentSpaceInfo> fakeParkingSpaces = <resMyRentSpaceInfo>[
 // fake api 可租借車位
 List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '266-1 11F',
     floor: 'B1',
     space: '52',
@@ -147,6 +149,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '預計用Line的名稱',
     floor: 'B1',
     space: 'A02',
@@ -157,6 +161,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '沒有Line的名稱就用樓層+車位號碼',
     floor: 'B1',
     space: 'A03',
@@ -167,6 +173,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '高小姊接',
     floor: 'B1',
     space: 'A04',
@@ -177,6 +185,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '喬瑟夫·喬斯達',
     floor: 'B1',
     space: 'A05',
@@ -187,6 +197,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '喬納森·喬斯達',
     floor: 'B1',
     space: 'A06',
@@ -197,6 +209,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '1',
+    communityName: '金櫻花園',
     owner: '空條坑錢承太郎',
     floor: 'B1',
     space: 'A07',
@@ -207,6 +221,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '喬',
     floor: 'B1',
     space: 'A08',
@@ -217,6 +233,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '魯',
     floor: 'B1',
     space: 'A08',
@@ -227,6 +245,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '諾',
     floor: 'B1',
     space: 'A08',
@@ -237,6 +257,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '喬魯巴納',
     floor: 'B1',
     space: 'A08',
@@ -247,6 +269,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '喬巴納',
     floor: 'B1',
     space: 'A08',
@@ -257,6 +281,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '喬魯',
     floor: 'B1',
     space: 'A08',
@@ -267,6 +293,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '魯巴納',
     floor: 'B1',
     space: 'A08',
@@ -277,6 +305,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '2',
+    communityName: '廣場花園',
     owner: '喬魯諾喬巴納',
     floor: 'B1',
     space: 'A08',
@@ -287,6 +317,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '3',
+    communityName: '喬巴社區',
     owner: '喬納',
     floor: 'B1',
     space: 'A08',
@@ -297,6 +329,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '3',
+    communityName: '喬巴社區',
     owner: '巴納',
     floor: 'B1',
     space: 'A08',
@@ -307,6 +341,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
     idleEndTime:'12:00'
   ),
   resRentSpaceInfo(
+    communityID: '3',
+    communityName: '喬巴社區',
     owner: '喬·喬',
     floor: 'B1',
     space: 'A08',
@@ -320,6 +356,8 @@ List<resRentSpaceInfo> fakeRentSpaces = <resRentSpaceInfo>[
 
 var fakeRentSpacesJson1 = '''[
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-1 1F",
       "floor": "B1",
       "space": "52",
@@ -330,6 +368,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"21:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B1",
       "space": "52",
@@ -340,6 +380,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"12:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -350,6 +392,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -360,6 +404,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -370,6 +416,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -380,6 +428,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -390,6 +440,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -400,6 +452,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -410,6 +464,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -420,6 +476,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -430,6 +488,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -440,6 +500,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -450,6 +512,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -460,6 +524,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -470,6 +536,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -480,6 +548,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -490,6 +560,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -500,6 +572,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -510,6 +584,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -520,6 +596,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -530,6 +608,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -540,6 +620,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -550,6 +632,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -560,6 +644,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -570,6 +656,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -580,6 +668,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -590,6 +680,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -600,6 +692,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -610,6 +704,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 100F",
       "floor": "B3",
       "space": "22",
@@ -620,6 +716,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -630,6 +728,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -640,6 +740,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -650,6 +752,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -660,6 +764,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 200F",
       "floor": "B3",
       "space": "22",
@@ -670,6 +776,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -680,6 +788,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -690,6 +800,8 @@ var fakeRentSpacesJson1 = '''[
       "idleEndTime":"22:00"
     },
     {
+      "communityID": "2",
+      "communityName": "廣場花園",
       "owner": "266-8 0F",
       "floor": "B3",
       "space": "22",
@@ -705,6 +817,8 @@ var fakeRentSpacesJson1 = '''[
 
 var fakeRentSpacesJson2 = '''[
     {
+      "communityID": "1",
+      "communityName": "金櫻花園",
       "owner": "266-1 11F",
       "floor": "B1",
       "space": "52",
@@ -715,6 +829,8 @@ var fakeRentSpacesJson2 = '''[
       "idleEndTime":"12:00"
     },
     {
+      "communityID": "3",
+      "communityName": "喬巴社區",
       "owner": "266-1 13F",
       "floor": "B1",
       "space": "52",
