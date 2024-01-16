@@ -60,11 +60,11 @@ class SelectItemMsgBox extends StatelessWidget {
   }
 
   final items = <ItemModel>[
-    ItemModel(1, 'First Item'),
-    ItemModel(2, 'Second Item'),
-    ItemModel(3, 'Third Item'),
-    ItemModel(4, 'Forth Item'),
-    ItemModel(5, 'Fifth Item'),
+    ItemModel(1, '金櫻花園'),
+    ItemModel(2, '廣場花園'),
+    ItemModel(3, '喬巴社區'),
+    ItemModel(4, '金櫻鎮'),
+    ItemModel(5, '金櫻一品'),
   ];
 }
 

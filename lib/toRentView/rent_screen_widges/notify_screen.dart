@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../enums/ParkingSpaceStatus.dart';
 import 'notify_screen_detail.dart';
+import 'notify_tabbar.dart';
 
 // 通知：顯示通知清單，清單項目以出粗車位為項目
 class NotifyListItem {
@@ -61,17 +62,32 @@ class NotifyScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('通知'),
       ),
-      body: ListView.builder(
-        itemCount: notifyList.length,
-        itemBuilder: (context, index) {
-          return NotifyListItemWidget(notify: notifyList[index]);
-        },
+      body: Stack(
+        children: <Widget>[
+          // 訊息列表
+          ListView.builder(
+            padding: EdgeInsets.only(
+              // 從 AppBar 的下方開始顯示，避免被 AppBar 覆蓋
+              top: MediaQuery.of(context).padding.top, // 狀態欄的高度
+              bottom: 62 + MediaQuery.of(context).padding.bottom,
+            ),
+            itemCount: notifyList.length,
+            itemBuilder: (context, index) {
+              return NotifyListItemWidget(notify: notifyList[index]);
+            },
+          ),
+          // TabBars
+          const CustomTabBarsPage(),
+          SizedBox( // 避免被下面狀態欄覆蓋
+            height: MediaQuery.of(context).padding.bottom,
+          )
+        ],
       ),
     );
   }
 }
 
-// 以車位為通知項目顯示租借訊息
+// 顯示「租借」訊息
 class NotifyListItemWidget extends StatelessWidget {
   final NotifyListItem notify;
 
@@ -156,7 +172,7 @@ class NotifyListItemWidget extends StatelessWidget {
   }
 }
 
-// 繪製紅色小點
+// 繪製圓圈小點
 class DotPainter extends CustomPainter {
   final Color color;
   final double radius;

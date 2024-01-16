@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import '../models/responseModels/res_rent_space_info.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class toRentDetail extends StatefulWidget {
   final resRentSpaceInfo parkingSpace;
 
