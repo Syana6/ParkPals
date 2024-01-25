@@ -1,21 +1,20 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:parkpals/myParkingView/parkingSpaceEditPage.dart';
-import '../apis/fakeData.dart';
-import 'models/responseModels/responseModels/res_parking_space_info.dart';
+import '../../apis/fakeData.dart';
+import '../models/responseModels/responseModels/res_parking_space_info.dart';
+import 'parking_space_edit.dart';
 
 // 出借：顯示指定社區上架車位的頁面
-class parkingSpaceList extends StatefulWidget {
+class parkingCommunity extends StatefulWidget {
   final String community;
 
-  parkingSpaceList({Key? key, required this.community}) : super(key: key);
+  parkingCommunity({Key? key, required this.community}) : super(key: key);
 
   @override
   _SpaceListPageState createState() => _SpaceListPageState();
 }
 
-class _SpaceListPageState extends State<parkingSpaceList> {
+class _SpaceListPageState extends State<parkingCommunity> {
   List<resMyRentSpaceInfo> spaces = fakeParkingSpaces;
 
   @override
@@ -43,7 +42,7 @@ class _SpaceListPageState extends State<parkingSpaceList> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => parkingSpaceEditPage(space: spaces[index]),
+                    builder: (context) => parkingSpaceEdit(space: spaces[index]),
                   ),
                 );
               },

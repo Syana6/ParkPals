@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parkpals/toRentView/to_rent_home_screen.dart';
 import 'app_theme.dart';
-import 'myParkingView/parkingCommunity.dart';
+import 'myParkingView/parking_home_screen.dart';
+import 'toRentView/to_rent_home_screen.dart';
 
 void main() {
   runApp(const ParkPALsApp());
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
     
     if (index == 0) {
-      tabBody = parkingCommunity();
+      tabBody = parkingHome();
     }
     else if (index == 1) {
       tabBody =

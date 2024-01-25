@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:parkpals/myParkingView/parkingSpaceList.dart';
-
 import '../apis/fakeData.dart';
 import 'models/responseModels/responseModels/res_parking_space_info.dart';
+import 'ui_view/parking_community.dart';
 
 // 出借：顯示上架車位社區的頁面
 // todo： 尚未登錄過車位的使用者，要先登錄車位才能看到這個頁面
 
-class parkingCommunity extends StatefulWidget {
-  const parkingCommunity({Key? key}) : super(key: key);
+class parkingHome extends StatefulWidget {
+  const parkingHome({Key? key}) : super(key: key);
 
   @override
   _listParkings createState() => _listParkings();
 }
 
-class _listParkings extends State<parkingCommunity> with TickerProviderStateMixin {
+class _listParkings extends State<parkingHome>
+    with TickerProviderStateMixin {
   AnimationController? animationController;
   late List<Communities> communities;
 
@@ -27,7 +27,7 @@ class _listParkings extends State<parkingCommunity> with TickerProviderStateMixi
     communities = fakeCommunities;
 
     super.initState();
-  } 
+  }
 
   @override
   void dispose() {
@@ -37,6 +37,9 @@ class _listParkings extends State<parkingCommunity> with TickerProviderStateMixi
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('我的社區'),
+      ),
       body: ListView.builder(
         itemCount: communities.length,
         itemBuilder: (context, index) {
@@ -46,7 +49,9 @@ class _listParkings extends State<parkingCommunity> with TickerProviderStateMixi
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => parkingSpaceList(community: communities[index].name)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          parkingCommunity(community: communities[index].name)),
                 );
               },
             ),

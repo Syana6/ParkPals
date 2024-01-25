@@ -1,17 +1,17 @@
 // 出借：編輯指定社區車位頁面
 import 'package:flutter/material.dart';
-import 'models/responseModels/responseModels/res_parking_space_info.dart';
+import '../models/responseModels/responseModels/res_parking_space_info.dart';
 
-class parkingSpaceEditPage extends StatefulWidget {
+class parkingSpaceEdit extends StatefulWidget {
   final resMyRentSpaceInfo space;
 
-  parkingSpaceEditPage({Key? key, required this.space}) : super(key: key);
+  parkingSpaceEdit({Key? key, required this.space}) : super(key: key);
 
   @override
-  _parkingSpaceEditPageState createState() => _parkingSpaceEditPageState();
+  _parkingSpaceEditState createState() => _parkingSpaceEditState();
 }
 
-class _parkingSpaceEditPageState extends State<parkingSpaceEditPage> {
+class _parkingSpaceEditState extends State<parkingSpaceEdit> {
   late TextEditingController ownerController;
   late TextEditingController floorController;
   late TextEditingController spaceController;

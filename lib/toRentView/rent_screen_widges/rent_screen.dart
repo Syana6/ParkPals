@@ -6,6 +6,7 @@ import '../ui_view/notificate_bell.dart';
 import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
 import 'notify_screen.dart';
+import 'setting_screen.dart';
 import 'to_rent_info.dart';
 
 // 租借：main rent_home_screen.dart
@@ -303,11 +304,18 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
                                       highlightColor: Colors.transparent,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(36.0)),
-                                      onTap: () {},
+                                      onTap: () {
+                                        // 切換到設定畫面
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SettingScreen()),
+                                        );
+                                      },
                                       child: const Icon(
                                         Icons.settings,
-                                        color:
-                                            Color.fromARGB(255, 32, 118, 175),
+                                        color:Color.fromARGB(255, 32, 118, 175),
                                         size: 28,
                                       ),
                                     ),
