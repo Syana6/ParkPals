@@ -23,8 +23,9 @@ class SettingScreen extends StatelessWidget {
 
             // 常用功能
             _buildSectionTitle('常用功能'),
-            _buildButtonsRow(['功能1', '功能2']),
-            _buildButtonsRow(['社區黑名單']),
+            _buildButtonsRow(['我的車號', '朋友車號']),
+            _buildButtonsRow(['社區黑名單', '']),
+            _buildButtonsRow(['', ]),
 
             // 更多功能
             _buildSectionTitle('更多功能(訂閱)'),
@@ -126,7 +127,7 @@ class SettingScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Icon(Icons.star), // Replace with your icon
+            const Icon(Icons.star,size: 20, color: Colors.yellowAccent), // Replace with your icon
             const SizedBox(width: 8.0),
             Text(label),
           ],

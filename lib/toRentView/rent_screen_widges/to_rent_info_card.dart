@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/responseModels/res_rent_space_info.dart';
-import 'to_rent_detail.dart';
+import 'to_rent_Info_card_detail.dart';
 
 // main rent_screen.dart
 // 租借：顯示可租借車位卡片(單張)
-class toRentInfo extends StatefulWidget {
-  const toRentInfo(
+class toRentInfoCard extends StatefulWidget {
+  const toRentInfoCard(
       {Key? key,
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
@@ -22,10 +22,10 @@ class toRentInfo extends StatefulWidget {
   final resRentSpaceInfo parkingInfo; // 可停物件資訊
 
   @override
-  _toRentInfoState createState() => _toRentInfoState();
+  _toRentInfoCardState createState() => _toRentInfoCardState();
 }
 
-class _toRentInfoState extends State<toRentInfo>
+class _toRentInfoCardState extends State<toRentInfoCard>
     with TickerProviderStateMixin {
 
   AnimationController? animationController;
@@ -80,7 +80,7 @@ class _toRentInfoState extends State<toRentInfo>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => toRentDetail(
+                          builder: (context) => toRentInfoCardDetail(
                             parkingSpace: widget.parkingInfo,
                           ),
                         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'rent_screen_widges/rent_screen.dart';
+import 'rent_screen_widges/to_rent_screen.dart';
 
 // main main.dart
 // 租借主頁面
@@ -24,7 +24,7 @@ class _RentHomeScreenState extends State<RentHomeScreen> with TickerProviderStat
   }
 
   Widget build (BuildContext context) {
-    return RentScreen(
+    return ToRentScreen(
         mainScreenAnimationController: widget.mainScreenAnimationController,
     );
   }

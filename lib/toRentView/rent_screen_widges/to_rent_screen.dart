@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkpals/toRentView/models/responseModels/res_rent_space_info.dart';
+import 'package:parkpals/toRentView/rent_screen_widges/to_rent_Info_card_detail.dart';
 import '../../apis/to_rent_service.dart';
 import '../to_rent_screen_theme.dart';
 import '../ui_view/notificate_bell.dart';
@@ -7,21 +8,21 @@ import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
 import 'notify_screen.dart';
 import 'setting_screen.dart';
-import 'to_rent_info.dart';
+import 'to_rent_info_card.dart';
 
 // 租借：main rent_home_screen.dart
 // 租借主頁面Body 使用Widge<ListView> 包裝所有功能Widget
 // 搜尋功能也放在這邊傳入to_rent_detail
-class RentScreen extends StatefulWidget {
-  const RentScreen({Key? key, this.mainScreenAnimationController})
+class ToRentScreen extends StatefulWidget {
+  const ToRentScreen({Key? key, this.mainScreenAnimationController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   @override
-  _RentScreenState createState() => _RentScreenState();
+  _ToRentScreenState createState() => _ToRentScreenState();
 }
 
-class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
+class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMixin {
   String searchValue = ''; // 搜尋車位文字區
   Animation<double>? topBarAnimation; // TopBar動畫
   List<Widget> listViews = <Widget>[]; // 所有Body UI的Widget
@@ -141,7 +142,7 @@ class _RentScreenState extends State<RentScreen> with TickerProviderStateMixin {
     // 注入可租借車位列表
     for (var park in listSpaces) {
       listViews.add(
-        toRentInfo(
+        toRentInfoCard(
             key: UniqueKey(),
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(

@@ -2,18 +2,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/responseModels/res_rent_space_info.dart';
-import 'package:flutter/material.dart';
 
-class toRentDetail extends StatefulWidget {
+class toRentInfoCardDetail extends StatefulWidget {
   final resRentSpaceInfo parkingSpace;
 
-  const toRentDetail({Key? key, required this.parkingSpace}) : super(key: key);
+  const toRentInfoCardDetail({Key? key, required this.parkingSpace}) : super(key: key);
 
   @override
-  _toRentDetailState createState() => _toRentDetailState();
+  _toRentInfoCardDetailState createState() => _toRentInfoCardDetailState();
 }
 
-class _toRentDetailState extends State<toRentDetail> {
+class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
   // 選擇的時間
   String selectedStartHour = '00';
   String selectedStartMinute = '00';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_theme.dart';
 import 'myParkingView/parking_home_screen.dart';
+import 'myPaymentView/my_payment_home_screen.dart';
 import 'toRentView/to_rent_home_screen.dart';
 
 void main() {
@@ -33,8 +34,6 @@ class ParkPALsApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      title: '社區車位租借',
-      // TODO: 這裡要加入登入頁面
       home: const HomePage(),
     );
   }
@@ -61,8 +60,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         duration: const Duration(milliseconds: 600), vsync: this);
 
     // 初始化租借畫面
-    tabBody =
-        RentHomeScreen(mainScreenAnimationController: _animationController);
+    tabBody = RentHomeScreen(mainScreenAnimationController: _animationController);
 
     super.initState();
   }
@@ -81,12 +79,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       tabBody = parkingHome();
     }
     else if (index == 1) {
-      tabBody =
-          RentHomeScreen(mainScreenAnimationController: _animationController);
+      tabBody = RentHomeScreen(mainScreenAnimationController: _animationController);
     } 
     else if (index == 2) {
-      // tabBody =
-      //     DropDownButton(mainScreenAnimationController: _animationController);
+      tabBody = PaymentHomeScreen(mainScreenAnimationController: _animationController);
     }  
   }
 
@@ -136,7 +132,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
-          label: '帳號',
+          label: '支付',
         ),
       ],
       currentIndex: _currentIndex,
