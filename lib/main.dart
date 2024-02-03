@@ -100,8 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 return const SizedBox();
               } else {
                 return Stack(
-                  
-                  alignment: AlignmentDirectional.bottomCenter, // 新增這一行
+                  alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
                     tabBody,
                     navigationBar(),

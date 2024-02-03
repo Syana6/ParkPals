@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parkpals/toRentView/models/responseModels/res_rent_space_info.dart';
-import 'package:parkpals/toRentView/rent_screen_widges/to_rent_Info_card_detail.dart';
 import '../../apis/to_rent_service.dart';
 import '../to_rent_screen_theme.dart';
 import '../ui_view/notificate_bell.dart';
@@ -22,7 +21,8 @@ class ToRentScreen extends StatefulWidget {
   _ToRentScreenState createState() => _ToRentScreenState();
 }
 
-class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMixin {
+class _ToRentScreenState extends State<ToRentScreen>
+    with TickerProviderStateMixin {
   String searchValue = ''; // 搜尋車位文字區
   Animation<double>? topBarAnimation; // TopBar動畫
   List<Widget> listViews = <Widget>[]; // 所有Body UI的Widget
@@ -32,7 +32,7 @@ class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMix
   int onSelectedDateIndex = 0; // 記錄選擇的日期index
   WeekDay? onSelectedDateObj; // 記錄選擇的日期物件
   List<resRentSpaceInfo> listSpaces = <resRentSpaceInfo>[]; // 可租借車位(by 日期)
-  late Widget AppBarDateList;
+  late Widget AppBarDateList; // 日期選擇器
 
   @override
   void initState() {
@@ -69,6 +69,7 @@ class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMix
       }
     });
 
+    widget.mainScreenAnimationController?.forward();
     super.initState();
   }
 
@@ -181,8 +182,6 @@ class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMix
             itemCount: listViews.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
-              widget.mainScreenAnimationController?.forward();
-
               return listViews[index];
             },
           );
@@ -191,8 +190,8 @@ class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMix
     );
   }
 
+  // 注入租借日期選擇器
   Widget getAppBarDateList() {
-    // 注入租借日期選擇器
     return (SelectDateListView(
       key: UniqueKey(),
       mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -316,7 +315,8 @@ class _ToRentScreenState extends State<ToRentScreen> with TickerProviderStateMix
                                       },
                                       child: const Icon(
                                         Icons.settings,
-                                        color:Color.fromARGB(255, 32, 118, 175),
+                                        color:
+                                            Color.fromARGB(255, 32, 118, 175),
                                         size: 28,
                                       ),
                                     ),
