@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../apis/fakeData.dart';
 import 'models/responseModels/responseModels/res_parking_space_info.dart';
+import 'parking_screen_theme.dart';
 import 'ui_view/parking_community.dart';
 
 // 出借：顯示上架車位社區的頁面
@@ -37,6 +38,7 @@ class _listParkings extends State<parkingHome>
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ParkingScreenTheme.background,
       appBar: AppBar(
         title: const Text('我的社區'),
       ),

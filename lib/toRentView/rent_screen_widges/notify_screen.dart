@@ -76,8 +76,8 @@ class NotifyScreen extends StatelessWidget {
               return NotifyListItemWidget(notify: notifyList[index]);
             },
           ),
-          // TabBars
-          const CustomTabBarsPage(),
+          // 一般通知、系統通知
+          const NotifyTabBars(),
           SizedBox( // 避免被下面狀態欄覆蓋
             height: MediaQuery.of(context).padding.bottom,
           )
@@ -87,7 +87,7 @@ class NotifyScreen extends StatelessWidget {
   }
 }
 
-// 顯示「租借」訊息
+// 顯示「一般通知」訊息
 class NotifyListItemWidget extends StatelessWidget {
   final NotifyListItem notify;
 

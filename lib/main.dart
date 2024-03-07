@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
-          label: '支付',
+          label: '我的',
         ),
       ],
       currentIndex: _currentIndex,

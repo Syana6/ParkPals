@@ -1,23 +1,21 @@
-// 顯示Tab Bard 「租借」、「出借」、「系統通知」
+// 顯示Tab Bard 「一般通知」、「系統通知」
 import 'package:flutter/material.dart';
-
 import '../to_rent_screen_theme.dart';
 
-class CustomTabBarsPage extends StatefulWidget {
-  const CustomTabBarsPage({super.key});
+class NotifyTabBars extends StatefulWidget {
+  const NotifyTabBars({super.key});
 
   @override
-  State<CustomTabBarsPage> createState() => _CustomTabBarsPageState();
+  State<NotifyTabBars> createState() => _NotifyTabBarsState();
 }
 
-class _CustomTabBarsPageState extends State<CustomTabBarsPage>
+class _NotifyTabBarsState extends State<NotifyTabBars>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   final _selectedColor = const Color(0xff1a73e8);
   final _tabs = const [
-    Tab(text: '   租借   '),
-    Tab(text: '   出借   '),
+    Tab(text: '  一般通知  '),
     Tab(text: '  系統通知  '),
   ];
 
