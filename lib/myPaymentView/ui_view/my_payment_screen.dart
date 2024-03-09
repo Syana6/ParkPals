@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../my_payment_screen_theme.dart';
 
-// 顯示支付頁面
-// 確認目前出借中數量、租借中數量、收款、付款狀態
+// 顯示支付/狀態頁面
+// 確認目前上架中、租借中、已收款、尚未付款狀態
 // 並可進行相關付款操作
 class PaymentScreen extends StatefulWidget {
   PaymentScreen({Key? key, this.mainScreenAnimationController})
@@ -17,6 +16,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 int _menuItemsSelectedIndex = 0;
 enum Menu { itemOne, itemTwo, itemThree }
 
+// TODO: 改由API提供
 final List<String> _menuItems = <String>[
   'All',
   '金櫻花園',
@@ -25,6 +25,7 @@ final List<String> _menuItems = <String>[
   '金櫻鎮',
 ];
 
+// 支付/狀態 主頁面Widget
 class _PaymentScreenState extends State<PaymentScreen>
     with TickerProviderStateMixin {
   @override
@@ -96,7 +97,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     );
   }
 
-  // 按鈕建構
+  // 建構Body按鈕
   // index : 按鈕順序(動畫用)
   // Interval((1 / (4 + 2)) : 4為按鈕總數
   Widget _buildButton(String text, Color color, int index) {
@@ -141,6 +142,8 @@ class _PaymentScreenState extends State<PaymentScreen>
         });
   }
 
+  // 選擇社區
+  // 使用較標準螢幕時收合Items
   Widget _drawer() => Drawer(
         child: ListView(
           children: _menuItems
@@ -167,6 +170,8 @@ class _PaymentScreenState extends State<PaymentScreen>
         ),
       );
 
+  // 選擇社區
+  // 使用較大螢幕時展開Items內容
   Widget _navBarItems() => Row(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -199,6 +204,7 @@ class _PaymentScreenState extends State<PaymentScreen>
       );
 }
 
+// 右上方頭像Widget
 class _ProfileIcon extends StatelessWidget {
   const _ProfileIcon({Key? key}) : super(key: key);
 
@@ -211,15 +217,11 @@ class _ProfileIcon extends StatelessWidget {
         itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,
-                child: Text('帳號'),
+                child: Text('帳號(考慮可能不使用)'),
               ),
               const PopupMenuItem<Menu>(
                 value: Menu.itemTwo,
-                child: Text('設定'),
-              ),
-              const PopupMenuItem<Menu>(
-                value: Menu.itemThree,
-                child: Text('以上都考慮可能不使用'),
+                child: Text('設定(考慮可能不使用)'),
               ),
             ]);
   }

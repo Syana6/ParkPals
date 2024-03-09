@@ -1,25 +1,20 @@
-// 租借：車位詳細資訊頁面
+// 租借：欲租借車位詳細資訊頁面
+// 可挑選要租借的時間
+// 自動計算總價
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/responseModels/res_rent_space_info.dart';
 
 class toRentInfoCardDetail extends StatefulWidget {
   final resRentSpaceInfo parkingSpace;
-
-  const toRentInfoCardDetail({Key? key, required this.parkingSpace}) : super(key: key);
+  const toRentInfoCardDetail({Key? key, required this.parkingSpace})
+      : super(key: key);
 
   @override
   _toRentInfoCardDetailState createState() => _toRentInfoCardDetailState();
 }
 
 class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
-  // 選擇的時間
-  String selectedStartHour = '00';
-  String selectedStartMinute = '00';
-
-  String selectedEndHour = '00';
-  String selectedEndMinute = '00';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +24,11 @@ class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           // 顯示車位詳細資訊
           Container(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8.0),
@@ -44,8 +39,10 @@ class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
               height: 200.0,
             ),
           ),
-
-          // 卡片顯示車位樓層和號碼
+          const SizedBox(
+            height: 10,
+          ),
+          // 顯示車位樓層和號碼
           Card(
             child: ListTile(
               title: Text('樓層: ${widget.parkingSpace.floor}'),
@@ -53,105 +50,24 @@ class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
             ),
           ),
 
-          // 卡片顯示可租借時間起迄
+          // 顯示可租借時間起迄
           Card(
             child: ListTile(
-              title: Text('可租借時間'),
+              title: const Text('可租借時間'),
               subtitle: Text(
                 '起始時間: ${widget.parkingSpace.idleStrTime} ~ 結束時間: ${widget.parkingSpace.idleEndTime}',
               ),
             ),
           ),
 
-          // 租借時間選擇
+          // 顯示單價與總費用
           Card(
+            // TODO: 需要再增加選擇時間的邏輯並重新計算
             child: ListTile(
-              title: Text('選擇租借時間'),
-              subtitle: Row(
-                children: [
-                  // 選擇起始小時
-                  Container(
-                    margin: EdgeInsets.fromLTRB(8,8,15,8), // 設定外邊距
-                    child: DropdownButton<String>(
-                      value: selectedStartHour,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedStartHour = newValue!;
-                        });
-                      },
-                      items: List.generate(24, (index) {
-                        String hour = index.toString().padLeft(2, '0');
-                        return DropdownMenuItem<String>(
-                          value: hour,
-                          child: Text(hour),
-                        );
-                      }),
-                    ),
-                  ),
-                  Text(':'),
-                  // 選擇起始分鐘
-                  Container(
-                    margin: EdgeInsets.fromLTRB(8,8,15,8), // 設定外邊距
-                    child: DropdownButton<String>(
-                      value: selectedStartMinute,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedStartMinute = newValue!;
-                        });
-                      },
-                      items: List.generate(2, (index) {
-                        String minute = (index * 30).toString().padLeft(2, '0');
-                        return DropdownMenuItem<String>(
-                          value: minute,
-                          child: Text(minute),
-                        );
-                      }),
-                    ),
-                  ),
-                  Text(' ~ '), // 分隔起始和結束時間
-                  // 選擇結束小時
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15,8,15,8), // 設定外邊距
-                    child: DropdownButton<String>(
-                      value: selectedEndHour,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedEndHour = newValue!;
-                        });
-                      },
-                      items: List.generate(24, (index) {
-                        String hour = index.toString().padLeft(2, '0');
-                        return DropdownMenuItem<String>(
-                          value: hour,
-                          child: Text(hour),
-                        );
-                      }),
-                    ),
-                  ),
-                  Text(':'),
-                  // 選擇結束分鐘
-                  Container(
-                    margin: EdgeInsets.fromLTRB(8,8,15,8), // 設定外邊距
-                    child: DropdownButton<String>(
-                      value: selectedEndMinute,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedEndMinute = newValue!;
-                        });
-                      },
-                      items: List.generate(2, (index) {
-                        String minute = (index * 30).toString().padLeft(2, '0');
-                        return DropdownMenuItem<String>(
-                          value: minute,
-                          child: Text(minute),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
+              title: Text('單價: ${widget.parkingSpace.price.toString()} / hr'),
+              subtitle: Text('總費用: ${calculateTotalPrice()}'),
             ),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -162,10 +78,33 @@ class _toRentInfoCardDetailState extends State<toRentInfoCardDetail> {
               // 處理確定租借按鈕的點擊事件
               // TODO: 在此處執行確定租借的相應邏輯
             },
-            child: Text('確定租借'),
+            child: const Text('確定租借'),
           ),
         ),
       ),
     );
+  }
+
+  // 計算總價
+  double calculateTotalPrice() {
+    // 計算時間區間
+    DateTime idleStartTime = DateTime.parse(
+        '${widget.parkingSpace.idleDate!} ${widget.parkingSpace.idleStrTime!}');
+    DateTime idleEndTime = DateTime.parse(
+        '${widget.parkingSpace.idleDate!} ${widget.parkingSpace.idleEndTime!}');
+    Duration timeDifference = idleEndTime.difference(idleStartTime);
+
+    // 計算總費用
+    double pricePerHour = double.parse(widget.parkingSpace.price);
+    double totalHours = timeDifference.inHours.toDouble();
+
+    // 不滿1小時以1小時計算
+    if (timeDifference.inMinutes.remainder(60) > 0) {
+      totalHours += 1; // Round up the total hours if there is any fraction
+    }
+
+    double totalPrice = pricePerHour * totalHours;
+
+    return totalPrice;
   }
 }

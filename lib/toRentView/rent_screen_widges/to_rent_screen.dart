@@ -21,18 +21,19 @@ class ToRentScreen extends StatefulWidget {
   _ToRentScreenState createState() => _ToRentScreenState();
 }
 
+String searchValue = ''; // 搜尋車位文字區
+int onSelectedDateIndex = 0; // 記錄選擇的日期index
+WeekDay? onSelectedDateObj; // 記錄選擇的日期物件
+
 class _ToRentScreenState extends State<ToRentScreen>
     with TickerProviderStateMixin {
-  String searchValue = ''; // 搜尋車位文字區
   Animation<double>? topBarAnimation; // TopBar動畫
   List<Widget> listViews = <Widget>[]; // 所有Body UI的Widget
   final ScrollController scrollController =
       ScrollController(); // 監聽上面bar滑動的opacity
   double topBarOpacity = 0.0;
-  int onSelectedDateIndex = 0; // 記錄選擇的日期index
-  WeekDay? onSelectedDateObj; // 記錄選擇的日期物件
   List<resRentSpaceInfo> listSpaces = <resRentSpaceInfo>[]; // 可租借車位(by 日期)
-  late Widget AppBarDateList; // 日期選擇器
+  late Widget appBarDateList; // 日期選擇器
 
   @override
   void initState() {
@@ -42,7 +43,7 @@ class _ToRentScreenState extends State<ToRentScreen>
             curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
 
     // 初始化日期選擇器
-    AppBarDateList = getAppBarDateList();
+    appBarDateList = getAppBarDateList();
     // 從API 取得指定日期車位清單
     getParkingSpaceList();
 
@@ -377,7 +378,7 @@ class _ToRentScreenState extends State<ToRentScreen>
                             right: 0,
                             top: 0,
                             bottom: 16 - 8.0 * topBarOpacity),
-                        child: AppBarDateList,
+                        child: appBarDateList,
                       ),
                     ],
                   ),

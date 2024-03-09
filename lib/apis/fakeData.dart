@@ -825,7 +825,7 @@ var fakeRentSpacesJson2 = '''[
       "price": "15",
       "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
       "idleDate":"2023-12-31",
-      "idleStrTime":"08:00",
+      "idleStrTime":"08:30",
       "idleEndTime":"12:00"
     },
     {
@@ -837,7 +837,7 @@ var fakeRentSpacesJson2 = '''[
       "price": "15",
       "image": "/Users/Syana/Side Project/ParkPals/parkpals/lib/assets/images/parking_space_1.jpg",
       "idleDate":"2023-10-31",
-      "idleStrTime":"08:00",
+      "idleStrTime":"08:40",
       "idleEndTime":"12:00"
     }
   ]
