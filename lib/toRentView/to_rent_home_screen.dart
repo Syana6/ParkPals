@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'rent_screen_widges/to_rent_screen.dart';
+import 'rent_screen_widgets/to_rent_screen.dart';
 
 // main main.dart
 // 租借主頁面

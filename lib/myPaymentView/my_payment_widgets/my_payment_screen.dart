@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../available_parking_widgets/available_Parking_Spaces.dart';
+
+
 // 顯示支付/狀態頁面
 // 確認目前上架中、租借中、已收款、尚未付款狀態
 // 並可進行相關付款操作
 class PaymentScreen extends StatefulWidget {
-  PaymentScreen({Key? key, this.mainScreenAnimationController})
+  const PaymentScreen({Key? key, this.mainScreenAnimationController})
       : super(key: key);
   final AnimationController? mainScreenAnimationController;
 
@@ -14,6 +17,7 @@ class PaymentScreen extends StatefulWidget {
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 int _menuItemsSelectedIndex = 0;
+
 enum Menu { itemOne, itemTwo, itemThree }
 
 // TODO: 改由API提供
@@ -120,7 +124,20 @@ class _PaymentScreenState extends State<PaymentScreen>
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        switch (index) {
+                          case 1:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AvailableParkingSpaces(community: _menuItems[_menuItemsSelectedIndex]),
+                              ),
+                            );
+                            break;
+                          default:
+                          // Handle default case here
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 11,
                         backgroundColor: color,
@@ -161,8 +178,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                       style: TextStyle(
                         fontSize: 18,
                         color: _menuItemsSelectedIndex == item.key
-                          ? Colors.green // 選中時的顏色
-                          : Colors.white, // 未選中時的顏色
+                            ? Colors.green // 選中時的顏色
+                            : Colors.white, // 未選中時的顏色
                       ),
                     ),
                   ))
@@ -193,8 +210,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     style: TextStyle(
                       fontSize: 18,
                       color: _menuItemsSelectedIndex == item.key
-                        ? Colors.green // 選中時的顏色
-                        : Colors.blue, // 未選中時的顏色
+                          ? Colors.green // 選中時的顏色
+                          : Colors.blue, // 未選中時的顏色
                     ),
                   ),
                 ),

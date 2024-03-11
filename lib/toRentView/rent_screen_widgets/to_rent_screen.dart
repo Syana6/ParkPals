@@ -5,8 +5,8 @@ import '../to_rent_screen_theme.dart';
 import '../ui_view/notificate_bell.dart';
 import '../ui_view/select_date_list_view.dart';
 import '../ui_view/select_item_msgbox.dart';
-import 'notify_screen.dart';
-import 'setting_screen.dart';
+import '../notify_screen_widgets/notify_screen.dart';
+import '../setting_widgets/setting_screen.dart';
 import 'to_rent_info_card.dart';
 
 // 租借：main rent_home_screen.dart
@@ -354,6 +354,7 @@ class _ToRentScreenState extends State<ToRentScreen>
                             // 搜尋車位
                             Expanded(
                               child: TextField(
+                                maxLines: 1,
                                 style: TextStyle(
                                     fontSize: 18 - 1 * topBarOpacity), // 调整文本大小
                                 decoration: const InputDecoration(
