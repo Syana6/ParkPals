@@ -18,6 +18,7 @@ class OmniDatetimePicker extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
+              SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
                   DateTime? dateTime = await showOmniDateTimePicker(

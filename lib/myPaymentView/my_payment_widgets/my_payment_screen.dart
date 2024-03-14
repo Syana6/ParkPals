@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../available_parking_widgets/available_Parking_Spaces.dart';
+import '../available_parking_widgets/available_parking_spaces.dart';
 
 
 // 顯示支付/狀態頁面

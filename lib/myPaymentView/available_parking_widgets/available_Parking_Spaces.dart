@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'available_Parking_Spaces_setting.dart';
+import 'available_parking_spaces_detail.dart';
 
+// 上架中主頁
 class AvailableParkingSpaces extends StatelessWidget {
   final String community;
   const AvailableParkingSpaces({Key? key, required this.community})
@@ -26,10 +27,9 @@ class AvailableParkingSpaces extends StatelessWidget {
                 return InkWell(
                   borderRadius: BorderRadius.circular(18.0),
                   onTap: () {
-                    // 點擊列表项时导航到另一个界面
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => AvailableParkingSpaceSetting(community:item.community, spaces:item.spaces),
+                        builder: (context) => AvailableParkingSpacesDetail(community:item.community, spaces:item.spaces),
                       ),
                     );
                   },
@@ -99,7 +99,7 @@ class MySpace {
 
 final List<MySpace> _mySpaces = [
   MySpace(
-    spaces: "B1 - 32",
+    spaces: "B1-32",
     community: "金櫻花園",
     imageUrl: "https://picsum.photos/id/1000/960/540",
   ),
