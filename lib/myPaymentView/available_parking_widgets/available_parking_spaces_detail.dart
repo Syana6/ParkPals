@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../common/dateTimeHelper.dart';
 import 'available_parking_spaces_edit.dart';
 
 // 上架中車位資訊
@@ -104,31 +105,6 @@ Widget addDot(Widget targetWidget) {
       ),
     ],
   );
-}
-
-// 計算時間差算出出租小時數，不足30分鐘按0.5計算，超過30分鐘小於60分鐘按1計算
-double calculateHourDifference(String startTime, String endTime) {
-  try {
-    DateTime start = DateTime.parse(startTime);
-    DateTime end = DateTime.parse(endTime);
-    Duration difference = end.difference(start);
-
-    double minutes = difference.inMinutes.toDouble();
-    double hourDifference = 0.0;
-
-    if (minutes <= 30) {
-      hourDifference = 0.5;
-    } else if (minutes > 30 && minutes <= 60) {
-      hourDifference = 1.0;
-    } else {
-      hourDifference = minutes / 60.0;
-    }
-
-    return double.parse(hourDifference.toStringAsFixed(1));
-  } catch (e) {
-    print('解析日期時間字符串時出錯：$e');
-    return 0.0;
-  }
 }
 
 class vacant {

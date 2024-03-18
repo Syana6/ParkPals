@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
+import '../../common/dateTimeHelper.dart';
+
 // 上架中車位資訊編輯
 // 進入編輯中的車位必須要從可租借移除，否則租借的人租借當下可能顯示舊的資訊
 class AvailableParkingSpacesEdit extends StatefulWidget {
@@ -25,8 +27,10 @@ class AvailableParkingSpacesEdit extends StatefulWidget {
 class _AvailableParkingSpacesEditState
     extends State<AvailableParkingSpacesEdit> {
   List<DateTime>? _selectedDate;
-  DateTime _selectedTime = DateTime.now();
-  double _hourlyRate = 0.0;
+  DateTime _selectedTime = DateTime.now(); // 時間選擇器
+  String _startTime = ""; // 選擇的出借開始時間
+  String _endTime = ""; // 選擇的出借結束時間
+  double _hourlyRate = 0.0; // 每小時出借金額
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +55,21 @@ class _AvailableParkingSpacesEditState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '選擇日期:',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                   Row(children: [
+                    const Text(
+                      '設定出借時間:',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '總計: \$${_hourlyRate * 2 * calculateHourDifference(_startTime, _endTime)}', // 顯示計算結果
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ]),
                   ElevatedButton(
                     onPressed: () => _selectDate(context),
                     style: ElevatedButton.styleFrom(
@@ -79,7 +94,7 @@ class _AvailableParkingSpacesEditState
                       LengthLimitingTextInputFormatter(3),
                     ],
                     decoration: const InputDecoration(
-                      labelText: '每小時金額',
+                      labelText: '每半小時金額',
                       labelStyle: TextStyle(fontSize: 18),
                       hintText: '請輸入每小時出借金額',
                       hintStyle: TextStyle(fontSize: 18),
@@ -123,8 +138,10 @@ class _AvailableParkingSpacesEditState
   void _selectDate(BuildContext context) async {
     final List<DateTime>? pickedDate = await showOmniDateTimeRangePicker(
       context: context,
-      startInitialDate: DateTime.now().add(const Duration(minutes: 30)),
-      endInitialDate: DateTime.now().add(const Duration(minutes: 90)),
+      startInitialDate:
+          getNextValidTime(DateTime.now().add(const Duration(minutes: 30))),
+      endInitialDate:
+          getNextValidTime(DateTime.now().add(const Duration(minutes: 90))),
       is24HourMode: true,
       isShowSeconds: false,
       minutesInterval: 30,
@@ -152,6 +169,8 @@ class _AvailableParkingSpacesEditState
     if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
         _selectedDate = pickedDate;
+         _startTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(_selectedDate![0]);
+ _endTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(_selectedDate![1]);
       });
     }
   }
