@@ -1,6 +1,10 @@
 // 計算時間差算出出租小時數，不足30分鐘按0.5計算，超過30分鐘小於60分鐘按1計算
 double calculateHourDifference(String startTime, String endTime) {
   try {
+    if(startTime == '' || endTime == '') {
+      return 0;
+    }
+
     DateTime start = DateTime.parse(startTime);
     DateTime end = DateTime.parse(endTime);
     Duration difference = end.difference(start);
@@ -18,7 +22,7 @@ double calculateHourDifference(String startTime, String endTime) {
 
     return double.parse(hourDifference.toStringAsFixed(1));
   } catch (e) {
-    print('解析日期時間字符串時出錯：$e');
+    print('解析日期時間字符串時出錯： startTime= $startTime endTime= $endTime ex: $e');
     return 0.0;
   }
 }
